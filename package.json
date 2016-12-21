@@ -1,0 +1,28 @@
+{
+  "name": "Hockey McHockeyFace",
+  "version": "0.0.1",
+  "description": " Useful tools for Svenska Hockeyligan ",
+  "engines": {
+    "node": "7.1.0"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "follow-redirects": "1.2.1",
+    "express": "4.14.0"
+    "tmp": "0.0.31"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theseal/hockey-mchockeyface.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+    "shl"
+  ],
+  "license": "MIT"
+}
