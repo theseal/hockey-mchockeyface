@@ -19,6 +19,7 @@ app.get('/calendar', (req, res) => {
         } else {
             console.log("no-filter");
         };
+        res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
         res.set('Content-Type', 'text/calendar');
         res.send(cal);
     });
