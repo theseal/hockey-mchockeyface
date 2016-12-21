@@ -3,6 +3,8 @@
 const express = require('express');
 const app = express();
 
+app.set('port', (process.env.PORT || 5000));
+
 app.get('/', function (req, res) {
     console.log("/");
     res.sendFile(__dirname + '/static/index.html');
@@ -22,6 +24,6 @@ app.get('/calendar', (req, res) => {
     });
 });
 
-app.listen(3000, function () {
-    console.log('Hockey McHockeyFace ready to serve on port 3000!')
+app.listen(app.get('port'), function () {
+    console.log('Hockey McHockeyFace ready to serve on port', app.get('port'))
 });
