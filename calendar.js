@@ -1,26 +1,21 @@
 const https = require('follow-redirects').https
 const fs = require('fs');
-const tmp = require('tmp');
 const util = require('util');
 const readline = require('readline');
+const stream = require('stream');
 
 const url = "https://www.google.com/calendar/ical/hockeyligan.sverige@gmail.com/public/basic.ics";
-const cached_ics = "/tmp/shl_ics";
+let icalData = false;
+let lastFetch = false;
 
 const download = function(url, cb) {
-    const tmpobj = tmp.fileSync();
-    const dest = tmpobj.name;
     let fetch = true;
-    let file_exists = false;
 
-    if (fs.existsSync(cached_ics)) {
-        file_exists = true;
-        const stats = fs.statSync(cached_ics);
-        const mtime = new Date(util.inspect(stats.mtime)).getTime() / 1000;
+    if (icalData) {
         const now = new Date().getTime() / 1000;
         const diff = now - 3600;
 
-        if (diff < mtime ) {
+        if (diff < lastFetch ) {
             fetch = false;
         };
     };
@@ -28,18 +23,24 @@ const download = function(url, cb) {
     if (!fetch) {
         cb(null);
     } else {
-        const file = fs.createWriteStream(dest);
         const request = https.get(url, function(response) {
-            response.pipe(file);
-            file.on('finish', function() {
-                file.close( () => {
-                    fs.rename(tmpobj.name,cached_ics);
-                    cb(null);
-                });
+            let bufferData = [];
+
+            response.on( 'data', ( chunk ) => {
+                bufferData.push( chunk );
+            });
+
+            response.on('end', () => {
+                icalData = Buffer.concat( bufferData );
+                lastFetch = new Date().getTime() / 1000;
+                cb(null);
             });
         }).on('error', function(err) {
-            fs.unlink(dest);
-            if (cb) cb(err.message);
+            if (cb) {
+                cb(err);
+
+                return false;
+            }
         });
     };
 };
@@ -84,60 +85,70 @@ const calendar = (f,cb) => {
 
     const global_re = re_array.join("|");
 
-    download(url,(err) => {
+    download(url, (err) => {
         if (err) {
             cb(err);
-        } else {
-            const lineReader = readline.createInterface({
-                input: fs.createReadStream(cached_ics)
-            });
 
-            let in_event = false;
-            let complete_event = false;
-            let event_data = [];
-            let output = true;
-            let print_event = false;
-            lineReader.on('line', function (line) {
-                output = true;
-                if (line.match("^BEGIN:VEVENT")) {
-                    in_event = true;
-                    output = false;
-                    print_event = false;
-                }
-                if (in_event) {
-                    event_data.push(line);
-                    output = false;
-                }
-                if (line.match("^END:VEVENT")) {
-                    print_event = false;
-                    in_event = false;
-                    output = false;
+            return false;
+        }
 
-                    event_data.forEach(function(entry) {
-                        re = /^SUMMARY/;
-                        if (entry.match(re)) {
-                                if (entry.match(global_re)) {
-                                    print_event = true;
-                                };
-                        };
-                    });
-                    if (print_event) {
-                        event_data.forEach(function(entry) {
-                            return_object += entry + newline;
-                        });
-                        print_event = false;
+        let readStream = new stream.PassThrough();
+        readStream.end( icalData );
+
+        const lineReader = readline.createInterface({
+            input: readStream
+        });
+
+        let in_event = false;
+        let complete_event = false;
+        let event_data = [];
+        let output = true;
+        let print_event = false;
+        lineReader.on('line', (line) => {
+            output = true;
+            if (line.match("^BEGIN:VEVENT")) {
+                in_event = true;
+                output = false;
+                print_event = false;
+            }
+            if (in_event) {
+                event_data.push(line);
+                output = false;
+            }
+            if (line.match("^END:VEVENT")) {
+                print_event = false;
+                in_event = false;
+                output = false;
+
+                event_data.forEach(function(entry) {
+                    re = /^SUMMARY/;
+                    if (entry.match(re)) {
+                            if (entry.match(global_re)) {
+                                print_event = true;
+                            };
                     };
-                    event_data = [];
+                });
+                if (print_event) {
+                    event_data.forEach(function(entry) {
+                        return_object += entry + newline;
+                    });
+                    print_event = false;
                 };
+                event_data = [];
+            };
 
-                if (output) {
-                    return_object += line + newline;
-                }
-            });
-            lineReader.on('close', () => {
-                cb(null,return_object);
-            });
-        };
+            if (output) {
+                return_object += line + newline;
+            }
+        });
+
+        lineReader.on('close', () => {
+            cb(null,return_object);
+        });
+
+        lineReader.on('error', ( error ) => {
+            cb(error);
+        });
     });
 };
 

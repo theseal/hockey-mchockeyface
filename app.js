@@ -13,12 +13,17 @@ app.get('/', function (req, res) {
 const calendar = require('./calendar.js');
 
 app.get('/calendar', (req, res) => {
-    calendar(req.query.team,(err,cal) => {
+    calendar(req.query.team, ( calendarError, cal ) => {
+        if( calendarError ){
+            throw calendarError;
+        }
+
         if (req.query.team) {
             console.log(req.query.team);
         } else {
             console.log("no-filter");
         };
+
         res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
         res.set('Content-Type', 'text/calendar');
         res.send(cal);
