@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const express = require('express');
+const favicon = require('serve-favicon');
 const app = express();
 
 app.set('port', (process.env.PORT || 5000));
+app.use(favicon(__dirname + '/static/noun_55243_cc.png'));
 
 app.get('/', function (req, res) {
     console.log("/");
