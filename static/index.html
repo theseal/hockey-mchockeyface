@@ -1,72 +1,111 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Hockey McHockeyFace</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>
+        Hockey McHockeyFace
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container">
+        <h1>
+            SHL calendar filter
+        </h1>
+        <p>
+            A selective way to use the official SHL calendar
+        </p>
+        <div class="alert alert-warning">
+            This is a beta, please feel free to report a bug or make a feature requests on GitHub.
+        </div>
+        <form class="form-group" action="calendar" method="get">
+            <input type="hidden" name="download" value="1">
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="BIF">Brynäs IF</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="DIF">Djurgården</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="FHC">Frölunda HC</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="FBK">Färjestad BK</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="HV71">HV71</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="KHK">Karlskrona HK</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="LIF" checked=true>Leksands IF</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="LHC">Linköping HC</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="LHF">Luleå Hockey</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="MIF">Malmö Redhawks</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="RBK">Rögle BK</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="SAIK">Skellefteå AIK</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="VLH">Växjö Lakers</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="team" value="ÖRE">Örebro Hockey</label>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control js-url" id="url">
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Download calendar (.ics)
+            </button>
+            <button class="btn js-copy-button" data-clipboard-target="#url">
+                Copy link
+            </button>
+        </form>
+    </div>
 
-<div class="container">
-    <h1>SHL calendar filter</h1>
-    <p>A selective way to use the official SHL calendar</p>
-    <div class="alert alert-warning">
-        This is a beta, please feel free to report a bug or make a feature requests on GitHub.
-    </div>
-    <form class="form-group" action="calendar" method="get">
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="BIF">Brynäs IF</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="DIF">Djurgården</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="FHC">Frölunda HC</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="FBK">Färjestad BK</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="HV71">HV71</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="KHK">Karlskrona HK</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="LIF" checked=true>Leksands IF</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="LHC">Linköping HC</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="LHF">Luleå Hockey</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="MIF">Malmö Redhawks</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="RBK">Rögle BK</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="SAIK">Skellefteå AIK</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="VLH">Växjö Lakers</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" name="team" value="ÖRE">Örebro Hockey</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Get calendar</button>
-    </form>
-</div>
+    <a href="https://github.com/theseal/hockey-mchockeyface">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
+    </a>
+    <script src="https://cdn.jsdelivr.net/g/jquery@3.1.1,bootstrap@3.3.7,clipboard.js@1.5.16"></script>
+    <script>
+    (function( $ ){
+        function setUrl(){
+            let teams = [];
 
-<a href="https://github.com/theseal/hockey-mchockeyface">
-    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
-</a>
+            $( '[name="team"]:checked' ).each( function( index, element ){
+                teams.push( 'team=' + $( element ).val() );
+            });
 
+            $( '.js-url' ).val( window.location.href + 'calendar?' + teams.join('&') );
+        }
+
+        $(function(){
+            setUrl();
+
+            new Clipboard( '.js-copy-button' );
+
+            $( 'body' ).on( 'change', '[name="team"]', function(){
+                setUrl();
+            });
+
+            $( 'body' ).on( 'click touchstart', '.js-copy-button', function( event ) {
+                event.preventDefault();
+            });
+        });
+    })( $ );
+    </script>
 </body>
 <!-- SHL – Hockeymördare -->
 </html>
