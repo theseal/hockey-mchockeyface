@@ -87,7 +87,7 @@ const calendar = (f,cb) => {
 
     if( filter.length === 1 ){
         calendarName = re_array[ 0 ];
-        calendarDesc = `Spelshechema för ${ re_array[ 0 ] }`;
+        calendarDesc = `Spelschema för ${ re_array[ 0 ] }`;
     }
 
     return_object = `${ return_object }X-WR-CALNAME:${ calendarName }${ newline }`;
