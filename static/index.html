@@ -7,6 +7,65 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .team-wrapper {
+            display: inline-block;
+            padding-bottom: 15%;
+            position: relative;
+            width: 19.7%;
+        }
+
+        .checkbox {
+            bottom: 10px;
+            left: 40px;
+            position: absolute;
+            right: 40px;
+            text-align: center;
+            top: 10px;
+        }
+
+        .checkbox label {
+            height: 100%;
+            padding-left: 0;
+            width: 100%;
+        }
+
+        .checkbox+.checkbox {
+            margin-top: 10px;
+        }
+
+        .checkbox img {
+            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+            filter: gray; /* IE6-9 */
+            -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+            filter: grayscale(100%);
+
+            left: 50%;
+            margin-bottom: 10px;
+            max-height: 90%;
+            max-width: 90%;
+            position: absolute;
+            top: 50%;
+            transform: translateY( -50% ) translateX( -50% );
+            transition: filter 0.3s ease;
+        }
+
+        .team-wrapper.active label {
+            box-shadow: 0 0 20px 0px #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"]:checked + img,
+        .checkbox:hover img {
+            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
+            -webkit-filter: grayscale(0%);
+            filter: grayscale(0%);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -21,47 +80,75 @@
         </div>
         <form class="form-group" action="calendar" method="get">
             <input type="hidden" name="download" value="1">
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="BIF">Brynäs IF</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="BIF"><img src="images/BIF.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="DIF">Djurgården</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="DIF"><img src="images/DIF.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="FHC">Frölunda HC</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="FHC"><img src="images/FHC.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="FBK">Färjestad BK</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="FBK"><img src="images/FBK.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="HV71">HV71</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="HV71"><img src="images/HV71.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="KHK">Karlskrona HK</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="KHK"><img src="images/KHK.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="LIF" checked=true>Leksands IF</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="LIF" checked=true><img src="images/LIF.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="LHC">Linköping HC</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="LHC"><img src="images/LHC.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="LHF">Luleå Hockey</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="LHF"><img src="images/LHF.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="MIF">Malmö Redhawks</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="MIF"><img src="images/MIF.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="RBK">Rögle BK</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="RBK"><img src="images/RBK.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="SAIK">Skellefteå AIK</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="SAIK"><img src="images/SAIK.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="VLH">Växjö Lakers</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="VLH"><img src="images/VLH.jpg"></label>
+                </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="team" value="ÖRE">Örebro Hockey</label>
+            <div class="team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="ÖRE"><img src="images/OHK.jpg"></label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="text" class="form-control js-url" id="url">
