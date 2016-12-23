@@ -48,8 +48,10 @@ const download = function(url, cb) {
 const calendar = (f,cb) => {
     const filter = [].concat(f);
     const re_array = [];
-    let return_object = "";
-    const newline = "\n";
+    const newline = "\r\n";
+    let return_object = `BEGIN:VCALENDAR${ newline }PRODID:-//Google Inc//Google Calendar//EN${ newline }VERSION:2.0${ newline }CALSCALE:GREGORIAN${ newline }X-WR-TIMEZONE:Europe/Stockholm${ newline }`;
+    let calendarName = 'SHL Matcher';
+    let calendarDesc = 'Spelschema för SHL';
 
     filter.forEach(function(team) {
         if (team === "BIF") {
@@ -83,6 +85,14 @@ const calendar = (f,cb) => {
         };
     });
 
+    if( filter.length === 1 ){
+        calendarName = re_array[ 0 ];
+        calendarDesc = `Spelshechema för ${ re_array[ 0 ] }`;
+    }
+
+    return_object = `${ return_object }X-WR-CALNAME:${ calendarName }${ newline }`;
+    return_object = `${ return_object }X-WR-CALDESC:${ calendarDesc }${ newline }`;
+
     const global_re = re_array.join("|");
 
     download(url, (err) => {
@@ -100,50 +110,42 @@ const calendar = (f,cb) => {
         });
 
         let in_event = false;
-        let complete_event = false;
         let event_data = [];
-        let output = true;
         let print_event = false;
+
         lineReader.on('line', (line) => {
-            output = true;
             if (line.match("^BEGIN:VEVENT")) {
                 in_event = true;
-                output = false;
-                print_event = false;
+                event_data = [];
             }
+
             if (in_event) {
                 event_data.push(line);
-                output = false;
             }
+
             if (line.match("^END:VEVENT")) {
                 print_event = false;
                 in_event = false;
-                output = false;
 
                 event_data.forEach(function(entry) {
                     re = /^SUMMARY/;
-                    if (entry.match(re)) {
-                            if (entry.match(global_re)) {
-                                print_event = true;
-                            };
+                    if (entry.match(re) && entry.match(global_re)) {
+                        print_event = true;
                     };
                 });
+
                 if (print_event) {
                     event_data.forEach(function(entry) {
                         return_object += entry + newline;
                     });
-                    print_event = false;
                 };
-                event_data = [];
             };
-
-            if (output) {
-                return_object += line + newline;
-            }
         });
 
         lineReader.on('close', () => {
-            cb(null,return_object);
+            return_object = `${ return_object }END:VCALENDAR`;
+
+            cb(null, return_object);
         });
 
         lineReader.on('error', ( error ) => {
