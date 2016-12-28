@@ -15,6 +15,15 @@
             width: 19.7%;
         }
 
+        .team-wrapper label {
+            transition: box-shadow 0.3s ease;
+        }
+
+        .team-wrapper.active label {
+            box-shadow: 0 0 20px 0px #ccc;
+            border-radius: 3px;
+        }
+
         .checkbox {
             bottom: 10px;
             left: 40px;
@@ -50,11 +59,6 @@
             transition: filter 0.3s ease;
         }
 
-        .team-wrapper.active label {
-            box-shadow: 0 0 20px 0px #ccc;
-            border-radius: 3px;
-        }
-
         input[type="checkbox"] {
             display: none;
         }
@@ -80,72 +84,72 @@
         </div>
         <form class="form-group" action="calendar" method="get">
             <input type="hidden" name="download" value="1">
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="BIF"><img src="images/BIF.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="DIF"><img src="images/DIF.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="FHC"><img src="images/FHC.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="FBK"><img src="images/FBK.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="HV71"><img src="images/HV71.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="KHK"><img src="images/KHK.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper active">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="LIF" checked=true><img src="images/LIF.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="LHC"><img src="images/LHC.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="LHF"><img src="images/LHF.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="MIF"><img src="images/MIF.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="RBK"><img src="images/RBK.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="SAIK"><img src="images/SAIK.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="VLH"><img src="images/VLH.jpg"></label>
                 </div>
             </div>
-            <div class="team-wrapper">
+            <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
                     <label><input type="checkbox" name="team" value="ÖRE"><img src="images/OHK.jpg"></label>
                 </div>
@@ -183,8 +187,10 @@
 
             new Clipboard( '.js-copy-button' );
 
-            $( 'body' ).on( 'change', '[name="team"]', function(){
+            $( 'body' ).on( 'change', '[name="team"]', function( event ){
                 setUrl();
+
+                $( event.currentTarget ).closest( '.js-team-wrapper' ).toggleClass( 'active' );
             });
 
             $( 'body' ).on( 'click touchstart', '.js-copy-button', function( event ) {
