@@ -8,11 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
+        .teams-wrapper {
+            font-size: 0;
+        }
+
         .team-wrapper {
             display: inline-block;
             padding-bottom: 15%;
             position: relative;
-            width: 19.7%;
+            width: 20%;
         }
 
         .team-wrapper label {
@@ -82,7 +86,7 @@
         <div class="alert alert-warning">
             This is a beta, please feel free to report a bug or make a feature requests on GitHub.
         </div>
-        <form class="form-group" action="calendar" method="get">
+        <form class="form-group teams-wrapper" action="calendar" method="get">
             <input type="hidden" name="download" value="1">
             <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
