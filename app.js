@@ -5,7 +5,8 @@ const favicon = require('serve-favicon');
 const app = express();
 
 app.set('port', (process.env.PORT || 5000));
-app.use(favicon(__dirname + '/static/noun_55243_cc.png'));
+app.use(express.static('static'));
+app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 
 app.get('/', function (req, res) {
     console.log("/");
@@ -29,7 +30,7 @@ app.get('/calendar', (req, res) => {
         if( req.query.download ){
             res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
         }
-        
+
         res.set('Content-Type', 'text/calendar');
         res.send(cal);
     });
