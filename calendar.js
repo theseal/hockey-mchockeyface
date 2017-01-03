@@ -76,7 +76,7 @@ const calendar = (f,cb) => {
             re_array.push("Malmö Redhawks");
         } else if ( team === "RBK" ) {
             re_array.push("Rögle BK");
-        } else if ( team === "SKE" ) {
+        } else if ( team === "SKE"  || team === "SAIK") {
             re_array.push("Skellefteå AIK");
         } else if ( team === "VLH" ) {
             re_array.push("Växjö Lakers");
