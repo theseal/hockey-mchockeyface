@@ -4,7 +4,7 @@ const util = require('util');
 const readline = require('readline');
 const stream = require('stream');
 
-const url = "https://www.google.com/calendar/ical/hockeyligan.sverige@gmail.com/public/basic.ics";
+const url = "http://www.shl.se/calendar/66/show/shl.ics";
 let icalData = false;
 let lastFetch = false;
 
