@@ -1,4 +1,5 @@
-const https = require('follow-redirects').https
+const http = require('http');
+
 const fs = require('fs');
 const util = require('util');
 const readline = require('readline');
@@ -23,7 +24,7 @@ const download = function(url, cb) {
     if (!fetch) {
         cb(null);
     } else {
-        const request = https.get(url, function(response) {
+        const request = http.get(url, function(response) {
             let bufferData = [];
 
             response.on( 'data', ( chunk ) => {
