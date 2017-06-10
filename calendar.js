@@ -6,6 +6,8 @@ const readline = require('readline');
 const stream = require('stream');
 
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
+const newline = "\r\n";
+
 let icalData = false;
 let lastFetch = false;
 
@@ -49,7 +51,6 @@ const download = function(shl_url, cb) {
 const calendar = (f,cb) => {
     const filter = [].concat(f);
     const re_array = [];
-    const newline = "\r\n";
     let return_object = `BEGIN:VCALENDAR${ newline }PRODID:-//Hockey McHF//Hockey McHockeyFace//EN${ newline }VERSION:2.0${ newline }CALSCALE:GREGORIAN${ newline }X-WR-TIMEZONE:Europe/Stockholm${ newline }`;
     let shl = false;
     let ha = false;
