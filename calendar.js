@@ -163,8 +163,8 @@ const calendar = (f,cb) => {
         calendarDesc = `Spelschema för ${ re_array[ 0 ] }`;
     }
 
-    return_object = `${ return_object }X-WR-CALNAME:${ calendarName }${ newline }`;
-    return_object = `${ return_object }X-WR-CALDESC:${ calendarDesc }${ newline }`;
+    return_object += `${ return_object }X-WR-CALNAME:${ calendarName }${ newline }`;
+    return_object += `${ return_object }X-WR-CALDESC:${ calendarDesc }${ newline }`;
 
     const global_re = re_array.join("|");
 
@@ -216,7 +216,7 @@ const calendar = (f,cb) => {
         });
 
         lineReader.on('close', () => {
-            return_object = `${ return_object }END:VCALENDAR`;
+            return_object += `${ return_object }END:VCALENDAR`;
 
             cb(null, return_object);
         });
