@@ -105,6 +105,9 @@ const calendar = (f,cb) => {
         } else if ( team === "AIS" ) {
             re_array.push("Almtuna IS");
             ha = true;
+        } else if ( team === "IFB" ) {
+            re_array.push("Björklöven");
+            ha = true;
         } else if ( team === "BIK" ) {
             re_array.push("BIK Karlskoga");
             ha = true;
