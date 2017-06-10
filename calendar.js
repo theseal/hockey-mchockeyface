@@ -50,7 +50,7 @@ const calendar = (f,cb) => {
     const filter = [].concat(f);
     const re_array = [];
     const newline = "\r\n";
-    let return_object = `BEGIN:VCALENDAR${ newline }PRODID:-//Google Inc//Google Calendar//EN${ newline }VERSION:2.0${ newline }CALSCALE:GREGORIAN${ newline }X-WR-TIMEZONE:Europe/Stockholm${ newline }`;
+    let return_object = `BEGIN:VCALENDAR${ newline }PRODID:-//Hockey McHF//Hockey McHockeyFace//EN${ newline }VERSION:2.0${ newline }CALSCALE:GREGORIAN${ newline }X-WR-TIMEZONE:Europe/Stockholm${ newline }`;
     let calendarName = 'SHL';
     let calendarDesc = 'Spelschema för SHL';
 
