@@ -5,11 +5,11 @@ const util = require('util');
 const readline = require('readline');
 const stream = require('stream');
 
-const url = "http://www.shl.se/calendar/66/show/shl.ics";
+const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
 let icalData = false;
 let lastFetch = false;
 
-const download = function(url, cb) {
+const download = function(shl_url, cb) {
     let fetch = true;
 
     if (icalData) {
@@ -24,7 +24,7 @@ const download = function(url, cb) {
     if (!fetch) {
         cb(null);
     } else {
-        const request = http.get(url, function(response) {
+        const request = http.get(shl_url, function(response) {
             let bufferData = [];
 
             response.on( 'data', ( chunk ) => {
@@ -168,7 +168,7 @@ const calendar = (f,cb) => {
 
     const global_re = re_array.join("|");
 
-    download(url, (err) => {
+    download(shl_url, (err) => {
         if (err) {
             cb(err);
 
