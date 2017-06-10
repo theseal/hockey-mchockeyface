@@ -55,6 +55,7 @@ const calendar = (f,cb) => {
     let calendarDesc = 'Spelschema för SHL';
 
     filter.forEach(function(team) {
+        // SHL
         if (team === "BIF") {
             re_array.push("Brynäs IF");
         } else if ( team === "DIF" ) {
@@ -67,8 +68,6 @@ const calendar = (f,cb) => {
             re_array.push("HV71");
         } else if ( team === "KHK" ) {
             re_array.push("Karlskrona HK");
-        } else if ( team === "LIF" ) {
-            re_array.push("Leksands IF");
         } else if ( team === "LHC" ) {
             re_array.push("Linköping HC");
         } else if ( team === "LHF" ) {
@@ -85,6 +84,33 @@ const calendar = (f,cb) => {
             re_array.push("Växjö Lakers");
         } else if ( team === "ÖRE" ) {
             re_array.push("Örebro Hockey");
+        // HA
+        } else if ( team === "AIK" ) {
+            re_array.push("AIK");
+        } else if ( team === "AIS" ) {
+            re_array.push("Almtuna IS");
+        } else if ( team === "BIK" ) {
+            re_array.push("BIK Karlskoga");
+        } else if ( team === "VIT" ) {
+            re_array.push("HC Vita Hästen");
+        } else if ( team === "TRO" ) {
+            re_array.push("IF Troja-Ljungby");
+        } else if ( team === "IKO" ) {
+            re_array.push("IK Oskarshamn");
+        } else if ( team === "PAN" ) {
+            re_array.push("IK Pantern");
+        } else if ( team === "MODO" ) {
+            re_array.push("MODO Hockey");
+        } else if ( team === "LIF" ) {
+            re_array.push("Leksands IF");
+        } else if ( team === "SSK" ) {
+            re_array.push("Södertjälje SK");
+        } else if ( team === "TIK" ) {
+            re_array.push("Timrå IK");
+        } else if ( team === "TAIF" ) {
+            re_array.push("Tingsryds AIF");
+        } else if ( team === "VVIK" ) {
+            re_array.push("Västervik IK");
         };
     });
 
