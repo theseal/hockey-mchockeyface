@@ -140,7 +140,7 @@ const calendar = (f,cb) => {
             re_array.push("Tingsryds AIF");
             ha = true;
         } else if ( team === "VVIK" ) {
-            re_array.push("Västervik IK");
+            re_array.push("Västerviks IK");
             ha = true;
         };
     });
