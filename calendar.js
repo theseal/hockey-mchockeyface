@@ -5,11 +5,69 @@ const util = require('util');
 const readline = require('readline');
 const stream = require('stream');
 
+const request = require("request");
+const cheerio = require("cheerio");
+const cheerioTableparser = require('cheerio-tableparser');
+const dateFormat = require('dateformat');
+
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
+const ha_url = "http://www.hockeyallsvenskan.se/matcher/spelschema";
+const ha_table = ".esGameSchedule";
 const newline = "\r\n";
 
 let icalData = false;
 let lastFetch = false;
+
+const ha_download = function( cb ) {
+    let return_object;
+    request(ha_url, function(error, response, body) {
+        var data = [];
+        $ = cheerio.load(body,{ decodeEntities: false });
+        cheerioTableparser($);
+        var array = $(ha_table).parsetable(false, false, false);
+        const re = new RegExp("^( |Datum)$");
+
+        array[0].forEach(function(d, i) {
+            const game = array[0][i];
+            if (re.test(game)) {
+                return false;
+            };
+            const date = array[2][i];
+            if (re.test(date)){
+                return false;
+            };
+
+            const start_date = dateFormat(date, "yyyymmdd'T'HHMMss");
+            const parsed_date = new Date(Date.parse(date));
+            const end_date = dateFormat(new Date(parsed_date.getTime() + 9000000),"yyyymmdd'T'HHMMss");
+
+            const home = array[4][i];
+            const away = array[6][i];
+
+            var row = {
+                "game": game,
+                "start_date": start_date,
+                "end_date": end_date,
+                "home": home,
+                "away": away,
+            };
+
+            data.push(row);
+        })
+
+        data.forEach(function(value) {
+            const game = value.game;
+            const start_date = value.start_date;
+            const end_date = value.end_date;
+            const home = value.home;
+            const away = value.away;
+            return_object += `BEGIN:VEVENT${newline}UID:${start_date}@${home}${newline}SUMMARY:${home} - ${away}${newline}DESCRIPTION:Omgång ${game}${ newline }DTSTART;TZID="+02:00":${start_date}${newline}DTEND;TZID=Europe/Stockholm:${end_date}${ newline }END:VEVENT${newline}`;
+        });
+
+        cb( null, return_object );
+    });
+};
+
 
 const download = function(shl_url, cb) {
     let fetch = true;
@@ -33,10 +91,12 @@ const download = function(shl_url, cb) {
                 bufferData.push( chunk );
             });
 
-            response.on('end', () => {
-                icalData = Buffer.concat( bufferData );
-                lastFetch = new Date().getTime() / 1000;
-                cb(null);
+            response.on('end', function() {
+                ha_download( function(error, data) {
+                    icalData = `${Buffer.concat( bufferData )}${data}`;
+                    lastFetch = new Date().getTime() / 1000;
+                    cb(null);
+                });
             });
         }).on('error', function(err) {
             if (cb) {
