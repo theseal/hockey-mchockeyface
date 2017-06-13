@@ -61,7 +61,7 @@ const ha_download = function( cb ) {
             const end_date = value.end_date;
             const home = value.home;
             const away = value.away;
-            return_object += `BEGIN:VEVENT${newline}UID:${start_date}@${home}${newline}SUMMARY:${home} - ${away}${newline}DESCRIPTION:Omgång ${game}${ newline }DTSTART;TZID="+02:00":${start_date}${newline}DTEND;TZID=Europe/Stockholm:${end_date}${ newline }END:VEVENT${newline}`;
+            return_object += `BEGIN:VEVENT${newline}UID:${start_date}@${home}${newline}SUMMARY:${home} - ${away}${newline}DESCRIPTION:Omgång ${game}${ newline }DTSTART;TZID="+02:00":${start_date}${newline}DTEND;TZID="+02:00":${end_date}${ newline }END:VEVENT${newline}`;
         });
 
         cb( null, return_object );
