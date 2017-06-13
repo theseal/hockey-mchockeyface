@@ -217,8 +217,7 @@ const calendar = (f,cb) => {
         });
 
         lineReader.on('close', () => {
-            return_object += `${ return_object }END:VCALENDAR`;
-
+            return_object = `${ return_object }END:VCALENDAR`;
             cb(null, return_object);
         });
 
