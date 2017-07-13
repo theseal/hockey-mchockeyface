@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": " Useful tools for Svenska Hockeyligan ",
   "engines": {
-    "node": "7.1.0"
+    "node": "8.1.4"
   },
   "main": "app.js",
   "scripts": {
