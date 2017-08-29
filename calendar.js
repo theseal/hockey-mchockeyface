@@ -8,7 +8,7 @@ const stream = require('stream');
 const request = require("request");
 const cheerio = require("cheerio");
 const cheerioTableparser = require('cheerio-tableparser');
-const dateFormat = require('dateformat');
+const moment = require('moment-timezone');
 
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
 const ha_url = "http://www.hockeyallsvenskan.se/matcher/spelschema";
@@ -27,6 +27,9 @@ const ha_download = function( cb ) {
         var array = $(ha_table).parsetable(false, false, false);
         const re = new RegExp("^( |Datum)$");
 
+        // 20180302T190000Z
+        const momentFormat = 'YYYYMMDDTHHmmss[Z]';
+
         array[0].forEach(function(d, i) {
             const game = array[0][i];
             if (re.test(game)) {
@@ -37,17 +40,16 @@ const ha_download = function( cb ) {
                 return false;
             };
 
-            const start_date = dateFormat(date, "yyyymmdd'T'HHMMss");
-            const parsed_date = new Date(Date.parse(date));
-            const end_date = dateFormat(new Date(parsed_date.getTime() + 9000000),"yyyymmdd'T'HHMMss");
+            const start_date = moment.tz(date, "Europe/Stockholm");
+            const end_date = moment( start_date ).add( 150, 'minutes' );
 
             const home = array[4][i];
             const away = array[6][i];
 
             var row = {
                 "game": game,
-                "start_date": start_date,
-                "end_date": end_date,
+                "start_date": start_date.utc().format( momentFormat ),
+                "end_date": end_date.utc().format( momentFormat ),
                 "home": home,
                 "away": away,
             };
@@ -61,7 +63,7 @@ const ha_download = function( cb ) {
             const end_date = value.end_date;
             const home = value.home;
             const away = value.away;
-            return_object += `BEGIN:VEVENT${newline}UID:${start_date}@${home}${newline}SUMMARY:${home} - ${away}${newline}DESCRIPTION:Omgång ${game}${ newline }DTSTART;TZID="+02:00":${start_date}${newline}DTEND;TZID="+02:00":${end_date}${ newline }END:VEVENT${newline}`;
+            return_object += `BEGIN:VEVENT${newline}UID:${start_date}@${home}${newline}SUMMARY:${home} - ${away}${newline}DESCRIPTION:Omgång ${game}${ newline }DTSTART:${start_date}${newline}DTEND:${end_date}${ newline }END:VEVENT${newline}`;
         });
 
         cb( null, return_object );
