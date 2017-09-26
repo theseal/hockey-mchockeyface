@@ -159,7 +159,17 @@ const get_shl_games = () => {
 
             shl_games = [];
             component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
-                const [ home, away ] = vevent.getFirstPropertyValue( 'summary' ).split( ' - ' );
+                let summary = vevent.getFirstPropertyValue( 'summary' );
+
+                // Check if the summary contains a number
+                // Probably means it's a score
+                if ( /\d/.test( summary ) ) {
+                    let matches = summary.match( /(.+?)\d/ );
+
+                    summary = matches[ 1 ].trim();
+                }
+
+                const [ home, away ] = summary.split( ' - ' );
                 const eventData = vevent.toJSON();
                 const event = new ICAL.Component( 'vevent' );
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
@@ -169,6 +179,8 @@ const get_shl_games = () => {
                         event.addPropertyWithValue( 'dtstart', property.getFirstValue() );
                     } else if ( property.name === 'dtend' ) {
                         event.addPropertyWithValue( 'dtend', property.getFirstValue() );
+                    } else if ( property.name === 'summary' ) {
+                        event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
                     } else {
                         event.addProperty( property );
                     }
