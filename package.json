@@ -1,20 +1,19 @@
 {
   "name": "hockey-mchockeyface",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": " Useful tools for Svenska Hockeyligan ",
   "engines": {
-    "node": "8.1.4"
+    "node": "8.4.0"
   },
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "cheerio": "1.0.0-rc.1",
-    "cheerio-tableparser": "1.0.1",
-    "dateformat": "2.0.0",
+    "cheerio": "^1.0.0-rc.1",
     "express": "4.14.0",
     "follow-redirects": "1.2.1",
+    "ical.js": "^1.2.2",
     "moment-timezone": "^0.5.13",
     "request": "2.81.0",
     "serve-favicon": "2.3.2"
