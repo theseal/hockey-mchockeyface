@@ -68,7 +68,7 @@ const normaliseName = function normaliseName( name ) {
             return 'Skellefteå AIK';
         case 'SSK':
         case 'Södertälje':
-            return 'Södertjälje SK';
+            return 'Södertälje SK';
         case 'TIK':
         case 'Timrå':
             return 'Timrå IK';
