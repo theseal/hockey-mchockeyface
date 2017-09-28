@@ -254,13 +254,13 @@ const calendar = (f,cb) => {
     update_games()
         .then( () => {
             for ( let i = 0; i < shl_games.length; i = i + 1 ) {
-                if ( include_teams.includes( shl_games[ i ].home ) || include_teams.includes( shl_games[ i.away ] ) ) {
+                if ( include_teams.includes( shl_games[ i ].home ) || include_teams.includes( shl_games[ i ].away ) ) {
                     calendar.addSubcomponent( shl_games[ i ].event );
                 }
             }
 
             for ( let i = 0; i < ha_games.length; i = i + 1 ) {
-                if ( include_teams.includes( ha_games[ i ].home ) || include_teams.includes( ha_games[ i.away ] ) ) {
+                if ( include_teams.includes( ha_games[ i ].home ) || include_teams.includes( ha_games[ i ].away ) ) {
                     calendar.addSubcomponent( ha_games[ i ].event );
                 }
             }
