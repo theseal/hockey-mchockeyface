@@ -204,7 +204,7 @@ const get_shl_games = () => {
 
 
 const update_games = function() {
-    return new Promise (( resolve, reject ) => {
+    return new Promise( ( resolve, reject ) => {
         let fetch = true;
 
         const now = new Date().getTime() / 1000;
@@ -215,6 +215,8 @@ const update_games = function() {
 
             return true;
         };
+
+        lastFetch = new Date().getTime() / 1000;
 
         const updates = [];
         updates.push( get_shl_games() );
