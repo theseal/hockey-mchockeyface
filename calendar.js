@@ -178,14 +178,15 @@ const get_shl_games = () => {
                 const eventData = vevent.toJSON();
                 const event = new ICAL.Component( 'vevent' );
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
+                event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
 
                 vevent.getAllProperties().map( ( property ) => {
                     if ( property.name === 'dtstart' ) {
                         event.addPropertyWithValue( 'dtstart', property.getFirstValue() );
                     } else if ( property.name === 'dtend' ) {
                         event.addPropertyWithValue( 'dtend', property.getFirstValue() );
-                    } else if ( property.name === 'summary' ) {
-                        event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
+                    } else if ( property.name === 'description' ) {
+                        event.addPropertyWithValue( 'description', property.getFirstValue() );
                     } else {
                         event.addProperty( property );
                     }
