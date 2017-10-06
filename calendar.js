@@ -175,7 +175,6 @@ const get_shl_games = () => {
                 }
 
                 const [ home, away ] = summary.split( ' - ' );
-                const eventData = vevent.toJSON();
                 const event = new ICAL.Component( 'vevent' );
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
