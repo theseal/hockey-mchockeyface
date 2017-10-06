@@ -111,8 +111,13 @@ const get_ha_games = () => {
 
                 const date = $element.data( 'game-date' );
                 const time = $element.find( '.rmss_c-schedule-game__live-info' ).first().text();
+                const start_date_string = `${ date } ${ time }`;
 
-                const start_date = moment.tz( `${ date } ${ time }`, "Europe/Stockholm");
+                if ( !moment( start_date_string, 'YYYY-MM-DD HH:mm', true ).isValid() ) {
+                    return true;
+                }
+
+                const start_date = moment.tz( start_date_string, 'Europe/Stockholm');
                 const end_date = moment( start_date ).add( 150, 'minutes' );
 
                 const game = $element.find( '.rmss_c-schedule-game__info__round-number' ).text().match( /\d+/g )[ 0 ];
