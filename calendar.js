@@ -133,8 +133,8 @@ const get_ha_games = () => {
                 event.addPropertyWithValue( 'uid', `${ game }-${ home }-${ away }` );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
                 event.addPropertyWithValue( 'description', `Omgång ${ game }` );
-                event.addPropertyWithValue( 'dtstart', ICAL.Time.fromString( start_date.utc().format( momentFormat ) ) );
-                event.addPropertyWithValue( 'dtend', ICAL.Time.fromString( end_date.utc().format( momentFormat ) ) );
+                event.addPropertyWithValue( 'dtstart', ICAL.Time.fromString( start_date.format( momentFormat ) ) );
+                event.addPropertyWithValue( 'dtend', ICAL.Time.fromString( end_date.format( momentFormat ) ) );
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
 
                 ha_games.push( {
