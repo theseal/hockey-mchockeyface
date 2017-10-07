@@ -25,8 +25,9 @@ const normaliseName = function normaliseName( name ) {
         case 'Karlskoga':
             return 'BIK Karlskoga';
         case 'BIF':
-            return 'Byrnäs IF';
+            return 'Brynäs IF';
         case 'DIF':
+        case 'Djurgården Hockey':
             return 'Djurgården';
         case 'FHC':
             return 'Frölunda HC';
@@ -36,6 +37,7 @@ const normaliseName = function normaliseName( name ) {
         case 'Vita Hästen':
             return 'HC Vita Hästen';
         case 'HV71':
+        case 'HV':
             return 'HV71';
         case 'TRO':
         case 'Troja/Ljungby':
