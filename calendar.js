@@ -176,20 +176,16 @@ const get_shl_games = () => {
 
                 const [ home, away ] = summary.split( ' - ' );
                 const event = new ICAL.Component( 'vevent' );
+
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
 
-                vevent.getAllProperties().map( ( property ) => {
-                    if ( property.name === 'dtstart' ) {
-                        event.addPropertyWithValue( 'dtstart', property.getFirstValue() );
-                    } else if ( property.name === 'dtend' ) {
-                        event.addPropertyWithValue( 'dtend', property.getFirstValue() );
-                    } else if ( property.name === 'description' ) {
-                        event.addPropertyWithValue( 'description', property.getFirstValue() );
-                    } else {
-                        event.addProperty( property );
-                    }
-                } );
+                event.addPropertyWithValue( 'dtstart', vevent.getFirstPropertyValue( 'dtstart' ) );
+                event.addPropertyWithValue( 'dtend', vevent.getFirstPropertyValue( 'dtend' ) );
+                event.addPropertyWithValue( 'description', vevent.getFirstPropertyValue( 'description' ) );
+                event.addPropertyWithValue( 'location', vevent.getFirstPropertyValue( 'location' ) );
+                event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
+                event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
 
                 shl_games.push( {
                     event: event,
