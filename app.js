@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/static/index.html');
 });
 
-const calendar = require('./calendar.js');
+const calendar = require('./modules/calendar');
 
 app.get('/calendar', (req, res) => {
     calendar(req.query.team, ( calendarError, cal ) => {
