@@ -77,6 +77,9 @@ const normaliseName = function normaliseName( name ) {
         case 'TAIF':
         case 'Tingsryd':
             return 'Tingsryds AIF';
+        case 'VIK':
+        case 'VIK Västerås HK':
+            return 'Västerås';
         case 'VVIK':
         case 'Västervik':
             return 'Västerviks IK';
