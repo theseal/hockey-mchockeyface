@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 const moment = require('moment-timezone');
 
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
-const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2017_regular";
+const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2018_regular";
 const momentFormat = 'YYYY-MM-DDTHH:mm:ss';
 
 let ha_games = [];
