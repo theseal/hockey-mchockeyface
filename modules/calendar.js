@@ -180,8 +180,9 @@ const update_games = function() {
 
 const calendar = (f,cb) => {
     const filter = [].concat(f);
-    const include_teams = [];
     const calendar = new ICAL.Component( 'vcalendar' );
+    let include_teams = [];
+
     calendar.addPropertyWithValue( 'prodid', '-//Hockey McHF//Hockey McHockeyFace//EN' );
     calendar.addPropertyWithValue( 'version', '2.0' );
     calendar.addPropertyWithValue( 'calscale', 'GREGORIAN' );
@@ -190,6 +191,10 @@ const calendar = (f,cb) => {
     filter.forEach(function(team) {
         include_teams.push( normaliseName( team ) );
     });
+
+    if ( include_teams.length === 0 ) {
+        include_teams = Object.keys( AVAILABLE_TEAMS );
+    }
 
     calendar.addPropertyWithValue( 'x-wr-calname', 'Svensk hockey' );
     calendar.addPropertyWithValue( 'x-wr-caldesc', 'Spelschema för svensk hockey' );
