@@ -111,17 +111,16 @@ const get_shl_games = () => {
             shl_games = [];
             component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
                 let summary = vevent.getFirstPropertyValue( 'summary' );
+                const event = new ICAL.Component( 'vevent' );
 
-                // Check if the summary contains a number
+                // Check if the summary contains a number prefixed by a space
                 // Probably means it's a score
-                if ( /\d/.test( summary ) ) {
-                    let matches = summary.match( /(.+?)\d/ );
+                if ( /\s\d/.test( summary ) ) {
+                    let matches = summary.match( /(.+?)\s\d/ );
 
                     summary = matches[ 1 ].trim();
                 }
-
                 const [ home, away ] = summary.split( ' - ' );
-                const event = new ICAL.Component( 'vevent' );
 
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
