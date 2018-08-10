@@ -126,6 +126,7 @@ const get_ha_games = () => {
                 const end_date = moment( start_date ).add( 150, 'minutes' );
 
                 const game = $element.find( '.rmss_c-schedule-game__info__round-number' ).text().match( /\d+/g )[ 0 ];
+                const venue = $element.find( '.rmss_c-schedule-game__info__venue' ).first().text();
 
                 let home = $element.find( '.rmss_c-schedule-game__team.is-home-team .rmss_c-schedule-game__team-name' ).first().text();
                 let away = $element.find( '.rmss_c-schedule-game__team.is-away-team .rmss_c-schedule-game__team-name' ).first().text();
@@ -136,6 +137,7 @@ const get_ha_games = () => {
                 event.addPropertyWithValue( 'uid', `${ game }-${ home }-${ away }` );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
                 event.addPropertyWithValue( 'description', `Omgång ${ game }` );
+                event.addPropertyWithValue( 'location', venue );
                 event.addPropertyWithValue( 'dtstart', ICAL.Time.fromString( start_date.format( momentFormat ) ) );
                 event.addPropertyWithValue( 'dtend', ICAL.Time.fromString( end_date.format( momentFormat ) ) );
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
