@@ -6,6 +6,7 @@ const moment = require('moment-timezone');
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
 const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2018_regular";
 const momentFormat = 'YYYY-MM-DDTHH:mm:ss';
+const AVAILABLE_TEAMS = require( '../assets/teams.json' );
 
 let ha_games = [];
 let shl_games = [];
@@ -13,83 +14,21 @@ let shl_games = [];
 let lastFetch = false;
 
 const normaliseName = function normaliseName( name ) {
-    switch ( name ) {
-        case 'AIK':
-            return 'AIK';
-        case 'AIS':
-        case 'Almtuna':
-            return 'Almtuna IS';
-        case 'IFB':
-            return 'Björklöven';
-        case 'BIK':
-        case 'Karlskoga':
-            return 'BIK Karlskoga';
-        case 'BIF':
-            return 'Brynäs IF';
-        case 'DIF':
-        case 'Djurgården Hockey':
-            return 'Djurgården';
-        case 'FHC':
-            return 'Frölunda HC';
-        case 'FBK':
-            return 'Färjestad BK';
-        case 'VIT':
-        case 'Vita Hästen':
-            return 'HC Vita Hästen';
-        case 'HV71':
-        case 'HV':
-            return 'HV71';
-        case 'TRO':
-        case 'Troja/Ljungby':
-            return 'IF Troja-Ljungby';
-        case 'IKO':
-        case 'Oskarshamn':
-            return 'IK Oskarshamn';
-        case 'PAN':
-        case 'Pantern':
-            return 'IK Pantern';
-        case 'KHK':
-            return 'Karlskrona HK';
-        case 'LHC':
-            return 'Linköping HC';
-        case 'LHF':
-            return 'Luleå Hockey';
-        case 'MIF':
-            return 'Malmö Redhawks';
-        case 'MODO':
-            return 'MODO Hockey';
-        case 'MIK':
-            return 'Mora IK';
-        case 'LIF':
-        case 'Leksand':
-            return 'Leksands IF';
-        case 'RBK':
-            return 'Rögle BK';
-        case 'SKE':
-        case 'SAIK':
-            return 'Skellefteå AIK';
-        case 'SSK':
-        case 'Södertälje':
-            return 'Södertälje SK';
-        case 'TIK':
-        case 'Timrå':
-            return 'Timrå IK';
-        case 'TAIF':
-        case 'Tingsryd':
-            return 'Tingsryds AIF';
-        case 'VIK':
-        case 'VIK Västerås HK':
-            return 'Västerås';
-        case 'VVIK':
-        case 'Västervik':
-            return 'Västerviks IK';
-        case 'VLH':
-            return 'Växjö Lakers';
-        case 'ÖRE':
-            return 'Örebro Hockey';
-        default:
-            return name;
-    };
+    for ( const team in AVAILABLE_TEAMS ) {
+        if ( team === name ) {
+            return team;
+        }
+
+        for ( const alternateName of AVAILABLE_TEAMS[ team ].alternateNames ) {
+            if ( alternateName === name ) {
+                return team;
+            }
+        }
+    }
+
+    console.error( `Unknown team ${ name }` );
+
+    return name;
 };
 
 const get_ha_games = () => {
