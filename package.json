@@ -10,13 +10,13 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.1",
-    "express": "4.14.0",
-    "follow-redirects": "1.2.1",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "4.16.3",
+    "follow-redirects": "1.5.7",
     "ical.js": "^1.2.2",
-    "moment-timezone": "^0.5.13",
-    "request": "2.81.0",
-    "serve-favicon": "2.3.2"
+    "moment-timezone": "^0.5.21",
+    "request": "2.88.0",
+    "serve-favicon": "2.5.0"
   },
   "repository": {
     "type": "git",
