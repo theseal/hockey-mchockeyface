@@ -14,6 +14,7 @@ app.get('/', function (req, res) {
 });
 
 const calendar = require('./modules/calendar');
+const rss = require( './modules/rss' );
 
 app.get('/calendar', (req, res) => {
     calendar(req.query.team, ( calendarError, cal ) => {
@@ -34,6 +35,17 @@ app.get('/calendar', (req, res) => {
         res.set('Content-Type', 'text/calendar');
         res.send(cal);
     });
+});
+
+app.get( '/rss/:team', ( req, res ) => {
+    rss.getFeed( req.params.team )
+        .then( ( feedString ) => {
+            res.set( 'Content-Type', 'application/rss+xml' );
+            res.send( feedString );
+        } )
+        .catch( ( error ) => {
+            console.error( error );
+        } );
 });
 
 app.listen(app.get('port'), function () {
