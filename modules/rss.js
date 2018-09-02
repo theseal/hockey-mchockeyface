@@ -3,14 +3,14 @@ const https = require( 'https' );
 const cheerio = require( 'cheerio' );
 const moment = require( 'moment-timezone' );
 
-const teamData = require( './teamdata' );
+const getTeamData = require( './teamdata' );
 
 const POSTS_PATH = '/artiklar';
 const RSS_ITEMS_TO_LOAD = 10;
 
 class RSS {
     getTeamUrl ( team, path ) {
-        const currentTeamData = teamData( team );
+        const currentTeamData = getTeamData( team );
 
         return `https://${ currentTeamData.homepage }${ path }`;
     }
@@ -48,7 +48,7 @@ class RSS {
     fixPostContent ( team, rawPostContent ) {
         let postContent = rawPostContent;
         let $;
-        const currentTeamData = teamData( team );
+        const currentTeamData = getTeamData( team );
 
         // Fix external multi-protocol urls
         postContent = postContent.replace( 'src="//', 'src="https://' );
@@ -95,9 +95,9 @@ class RSS {
     }
 
     getFeed( team ) {
-        const tempData = teamData( team );
+        const teamData = getTeamData( team );
 
-        if ( !tempData.homepage ) {
+        if ( !teamData.homepage ) {
             return Promise.resolve( `<?xml version="1.0" encoding="UTF-8"?>
             <rss version="2.0">
                 <channel>
