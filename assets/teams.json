@@ -1,161 +1,191 @@
-{
-    "AIK": {
-        "alternateNames": []
+[
+    {
+        "name": "AIK",
+        "alternateNames": [],
+        "homepage": "www.aikhockey.se"
     },
-    "Almtuna IS": {
+    {
+        "name": "Almtuna IS",
         "alternateNames": [
             "AIS",
             "Almtuna"
         ]
     },
-    "Björklöven": {
+    {
+        "name": "Björklöven",
         "alternateNames": [
             "IFB"
         ]
     },
-    "BIK Karlskoga": {
+    {
+        "name": "BIK Karlskoga",
         "alternateNames": [
             "BIK",
             "Karlskoga"
         ]
     },
-    "Brynäs IF": {
+    {
+        "name": "Brynäs IF",
         "alternateNames": [
             "BIF"
         ]
     },
-    "Djurgården": {
+    {
+        "name": "Djurgården",
         "alternateNames": [
             "DIF",
             "Djurgården Hockey"
         ]
     },
-    "Frölunda HC": {
+    {
+        "name": "Frölunda HC",
         "alternateNames": [
             "FHC"
         ]
     },
-    "Färjestad BK": {
+    {
+        "name": "Färjestad BK",
         "alternateNames": [
             "FBK"
         ]
     },
-    "HC Vita Hästen": {
+    {
+        "name": "HC Vita Hästen",
         "alternateNames": [
             "VIT",
             "Vita Hästen"
         ]
     },
-    "HV71": {
+    {
+        "name": "HV71",
         "alternateNames": [
             "HV"
         ]
     },
-    "IF Troja-Ljungby": {
+    {
+        "name": "IF Troja-Ljungby",
         "alternateNames": [
             "TRO",
             "Troja/Ljungby"
         ]
     },
-    "IK Oskarshamn": {
+    {
+        "name": "IK Oskarshamn",
         "alternateNames": [
             "IKO",
             "Oskarshamn"
         ]
     },
-    "IK Pantern": {
+    {
+        "name": "IK Pantern",
         "alternateNames": [
             "PAN",
             "Pantern"
         ]
     },
-    "Karlskrona HK": {
+    {
+        "name": "Karlskrona HK",
         "alternateNames": [
             "KHK",
             "Karlskrona"
         ]
     },
-    "Linköping HC": {
+    {
+        "name": "Linköping HC",
         "alternateNames": [
             "LHC"
         ]
     },
-    "Luleå Hockey": {
+    {
+        "name": "Luleå Hockey",
         "alternateNames": [
             "LHF"
         ]
     },
-    "Malmö Redhawks": {
+    {
+        "name": "Malmö Redhawks",
         "alternateNames": [
             "MIF"
         ]
     },
-    "MODO Hockey": {
+    {
+        "name": "MODO Hockey",
         "alternateNames": [
             "MODO"
         ]
     },
-    "Mora IK": {
+    {
+        "name": "Mora IK",
         "alternateNames": [
             "Mora",
             "MIK"
         ]
     },
-    "Leksands IF": {
+    {
+        "name": "Leksands IF",
         "alternateNames": [
             "LIF",
             "Leksand"
         ]
     },
-    "Rögle BK": {
+    {
+        "name": "Rögle BK",
         "alternateNames": [
             "RBK"
         ]
     },
-    "Skellefteå AIK": {
+    {
+        "name": "Skellefteå AIK",
         "alternateNames": [
             "SKE",
             "SAIK"
         ]
     },
-    "Södertälje SK": {
+    {
+        "name": "Södertälje SK",
         "alternateNames": [
             "SSK",
             "Södertälje"
         ]
     },
-    "Timrå IK": {
+    {
+        "name": "Timrå IK",
         "alternateNames": [
             "TIK",
             "Timrå"
         ]
     },
-    "Tingsryds AIF": {
+    {
+        "name": "Tingsryds AIF",
         "alternateNames": [
             "TAIF",
             "Tingsryd"
         ]
     },
-    "Västerås": {
+    {
+        "name": "Västerås",
         "alternateNames": [
             "VIK",
             "VIK Västerås HK"
         ]
     },
-    "Västerviks IK": {
+    {
+        "name": "Västerviks IK",
         "alternateNames": [
             "VVIK",
             "Västervik"
         ]
     },
-    "Växjö Lakers": {
+    {
+        "name": "Växjö Lakers",
         "alternateNames": [
             "VLH"
         ]
     },
-    "Örebro Hockey": {
+    {
+        "name": "Örebro Hockey",
         "alternateNames": [
             "ÖRE"
         ]
     }
-}
+]

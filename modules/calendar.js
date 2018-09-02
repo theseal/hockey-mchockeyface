@@ -3,33 +3,16 @@ const request = require("request");
 const cheerio = require("cheerio");
 const moment = require('moment-timezone');
 
+const teamData = require( './teamdata' );
+
 const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
 const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2018_regular";
 const momentFormat = 'YYYY-MM-DDTHH:mm:ss';
-const AVAILABLE_TEAMS = require( '../assets/teams.json' );
 
 let ha_games = [];
 let shl_games = [];
 
 let lastFetch = false;
-
-const normaliseName = function normaliseName( name ) {
-    for ( const team in AVAILABLE_TEAMS ) {
-        if ( team === name ) {
-            return team;
-        }
-
-        for ( const alternateName of AVAILABLE_TEAMS[ team ].alternateNames ) {
-            if ( alternateName === name ) {
-                return team;
-            }
-        }
-    }
-
-    console.error( `Unknown team ${ name }` );
-
-    return name;
-};
 
 const get_ha_games = () => {
     return new Promise( ( resolve, reject ) => {
@@ -69,8 +52,10 @@ const get_ha_games = () => {
 
                 let home = $element.find( '.rmss_c-schedule-game__team.is-home-team .rmss_c-schedule-game__team-name' ).first().text();
                 let away = $element.find( '.rmss_c-schedule-game__team.is-away-team .rmss_c-schedule-game__team-name' ).first().text();
-                home = normaliseName( home );
-                away = normaliseName( away );
+                let homeData = teamData( home );
+                let awayData = teamData( away );
+                home = homeData.name
+                away = awayData.name;
 
                 const event = new ICAL.Component( 'vevent' );
                 event.addPropertyWithValue( 'uid', `${ game }-${ home }-${ away }` );
@@ -132,10 +117,13 @@ const get_shl_games = () => {
                 event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
                 event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
 
+                const homeData = teamData( home );
+                const awayData = teamData( away );
+
                 shl_games.push( {
                     event: event,
-                    home: normaliseName( home ),
-                    away: normaliseName( away ),
+                    home: homeData.name,
+                    away: awayData.name,
                 } );
             } );
 
@@ -189,11 +177,16 @@ const calendar = (f,cb) => {
     calendar.addPropertyWithValue( 'x-wr-timezone', 'Europe/Stockholm' );
 
     filter.forEach(function(team) {
-        include_teams.push( normaliseName( team ) );
+        const tempData = teamData( team );
+        include_teams.push( tempData.name );
     });
 
     if ( include_teams.length === 0 ) {
-        include_teams = Object.keys( AVAILABLE_TEAMS );
+        const allTeams = teamData();
+
+        include_teams = allTeams.map( ( team ) => {
+            return team.name;
+        } );
     }
 
     calendar.addPropertyWithValue( 'x-wr-calname', 'Svensk hockey' );
