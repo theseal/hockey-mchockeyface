@@ -12,7 +12,7 @@ class RSS {
     getTeamUrl ( team, path ) {
         const currentTeamData = getTeamData( team );
 
-        return `https://${ currentTeamData.homepage }${ path }`;
+        return `https://${ currentTeamData.homepage }${ path }`;
     }
 
     loadPage ( team, path ) {
@@ -31,7 +31,7 @@ class RSS {
                 }
 
                 response.on( 'data', ( chunk ) => {
-                    rawData = `${ rawData }${ chunk }`;
+                    rawData = `${ rawData }${ chunk }`;
                 } );
 
                 response.on( 'end', () => {
@@ -88,7 +88,7 @@ class RSS {
     getFullPost( team, path ) {
         return this.loadPage( team, path )
             .then( ( postPage ) => {
-                const $ = cheerio.load( postPage );
+                const $ = cheerio.load( postPage );
 
                 return this.fixPostContent( team, $( '.rmss_article-main' ).html() );
             } );
