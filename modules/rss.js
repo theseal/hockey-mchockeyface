@@ -101,9 +101,9 @@ class RSS {
             return Promise.resolve( `<?xml version="1.0" encoding="UTF-8"?>
             <rss version="2.0">
                 <channel>
-                    <title>${ team } News Not Implemented</title>
-                    <link>https://hockey-mchockeyface.herokuapp.com/rss/${ team }</link>
-                    <description>This will be a feed of the latest ${ team } news</description>
+                    <title>${ teamData.name } News Not Implemented</title>
+                    <link>https://hockey-mchockeyface.herokuapp.com/rss/${ team }</link>
+                    <description>This will be a feed of the latest ${ teamData.name } news</description>
                     <language>sv-se</language>
                     <copyright>Nah, fuck that shit :D</copyright>
                 </channel>
@@ -115,23 +115,23 @@ class RSS {
                 let feedString = `<?xml version="1.0" encoding="UTF-8"?>
                 <rss version="2.0">
                     <channel>
-                        <title>${ team } News</title>
-                        <link>https://hockey-mchockeyface.herokuapp.com/rss/${ team }</link>
-                        <description>This is a feed of the latest ${ team } news</description>
+                        <title>${ teamData.name } News</title>
+                        <link>https://hockey-mchockeyface.herokuapp.com/rss/${ team }</link>
+                        <description>This is a feed of the latest ${ teamData.name } news</description>
                         <language>sv-se</language>
                         <copyright>Nah, fuck that shit :D</copyright>`;
 
                 for ( const article of articleObjects ) {
-                    feedString = `${ feedString }
+                    feedString = `${ feedString }
                     <item>
-                        <title>${ article.title }</title>
-                        <description><![CDATA[${ article.description }]]></description>
-                        <link>${ article.url }</link>
-                        <pubDate>${ moment( article.timestamp ).format( 'ddd, DD MMM YYYY HH:mm:ss' ) }</pubDate>
+                        <title>${ article.title }</title>
+                        <description><![CDATA[${ article.description }]]></description>
+                        <link>${ article.url }</link>
+                        <pubDate>${ moment( article.timestamp ).format( 'ddd, DD MMM YYYY HH:mm:ss' ) }</pubDate>
                     </item>`;
                 }
 
-                feedString = `${ feedString }
+                feedString = `${ feedString }
                     </channel>
                 </rss>`;
 
