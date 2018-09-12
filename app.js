@@ -17,7 +17,7 @@ const calendar = require('./modules/calendar');
 const rss = require( './modules/rss' );
 
 app.get('/calendar', (req, res) => {
-    calendar(req.query.team, ( calendarError, cal ) => {
+    calendar(req.query.team || [], ( calendarError, cal ) => {
         if( calendarError ){
             throw calendarError;
         }
