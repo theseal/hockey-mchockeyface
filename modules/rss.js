@@ -98,7 +98,7 @@ class RSS {
         const teamData = getTeamData( team );
 
         if ( !teamData ) {
-          return Promise.reject(new Error(`Could not find team ${ team }`));
+          return Promise.reject( new Error( `Could not find team ${ team }` ) );
         }
 
         if ( !teamData.homepage ) {
