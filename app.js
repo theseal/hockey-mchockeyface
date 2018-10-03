@@ -45,6 +45,7 @@ app.get( '/rss/:team', ( req, res ) => {
         } )
         .catch( ( error ) => {
             console.error( error );
+            res.sendStatus(404);
         } );
 });
 

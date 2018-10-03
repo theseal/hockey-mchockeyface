@@ -97,6 +97,10 @@ class RSS {
     getFeed( team ) {
         const teamData = getTeamData( team );
 
+        if ( !teamData ) {
+          return Promise.reject(new Error(`Could not find team ${ team }`));
+        }
+
         if ( !teamData.homepage ) {
             return Promise.resolve( `<?xml version="1.0" encoding="UTF-8"?>
             <rss version="2.0">
