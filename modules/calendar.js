@@ -105,7 +105,14 @@ const get_shl_games = () => {
 
                     summary = matches[ 1 ].trim();
                 }
+
                 const [ home, away ] = summary.split( ' - ' );
+
+                if( !home || !away ) {
+                    console.log( `Unable to parse ${ summary } as home & away, skipping` );
+
+                    return true;
+                }
 
                 event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
                 event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
