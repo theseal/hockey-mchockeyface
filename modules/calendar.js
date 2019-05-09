@@ -5,7 +5,7 @@ const moment = require('moment-timezone');
 
 const teamData = require( './teamdata' );
 
-const shl_url = "http://www.shl.se/calendar/66/show/shl.ics";
+const shl_url = "https://calendar.ramses.nu/calendar/66/show/shl.ics";
 const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2018_regular";
 const momentFormat = 'YYYY-MM-DDTHH:mm:ss';
 
