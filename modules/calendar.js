@@ -1,148 +1,80 @@
 const ICAL = require( 'ical.js' );
 const request = require("request");
-const cheerio = require("cheerio");
-const moment = require('moment-timezone');
 
 const teamData = require( './teamdata' );
 
 const shl_url = "https://calendar.ramses.nu/calendar/66/show/shl.ics";
-const ha_url = "http://www.hockeyallsvenskan.se/spelschema/HA_2019_regular";
-const momentFormat = 'YYYY-MM-DDTHH:mm:ss';
+const ha_url = "https://calendar.ramses.nu/calendar/163/show/schema-19-20.ics";
 
-let ha_games = [];
-let shl_games = [];
+let games = [];
 
 let lastFetch = false;
 
-const get_ha_games = () => {
-    return new Promise( ( resolve, reject ) => {
-        request( ha_url, ( error, response, body ) => {
-            if ( error ) {
-                reject( error );
-                return false;
-            }
+const get_games = () => {
+    games = [];
 
-            const $ = cheerio.load( body, {
-                decodeEntities: false,
-            } );
-            const gamesHtml = $( '.rmss_c-schedule-game__row-wrapper' );
-            ha_games = [];
+    const urlArray = [ ha_url, shl_url]
 
-            gamesHtml.each( ( index, element ) => {
-                const $element = $( element );
+    urlArray.forEach(function(url) {
+        return new Promise( ( resolve, reject ) => {
+            request( url, ( error, response, body ) => {
+                if ( error ) {
+                    reject( error );
 
-                // Skip played games
-                if ( $element.data( 'game-mode' ) === 'played' ) {
-                    return true;
+                    return false;
                 }
+                const data = ICAL.parse( body );
+                const component = new ICAL.Component( data );
 
-                const date = $element.data( 'game-date' );
-                const time = $element.find( '.rmss_c-schedule-game__live-info' ).first().text();
-                const start_date_string = `${ date } ${ time }`;
+                component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
+                    let summary = vevent.getFirstPropertyValue( 'summary' );
+                    const event = new ICAL.Component( 'vevent' );
 
-                if ( !moment( start_date_string, 'YYYY-MM-DD HH:mm', true ).isValid() ) {
-                    return true;
-                }
+                    // Check if the summary contains a number prefixed by a space
+                    // Probably means it's a score
+                    if ( /\s\d/.test( summary ) ) {
+                        let matches = summary.match( /(.+?)\s\d/ );
 
-                const start_date = moment.tz( start_date_string, 'Europe/Stockholm');
-                const end_date = moment( start_date ).add( 150, 'minutes' );
+                        summary = matches[ 1 ].trim();
+                    }
 
-                const game = $element.find( '.rmss_c-schedule-game__info__round-number' ).text().match( /\d+/g )[ 0 ];
-                const venue = $element.find( '.rmss_c-schedule-game__info__venue' ).first().text();
+                    const [ home, away ] = summary.split( ' - ' );
 
-                let home = $element.find( '.rmss_c-schedule-game__team.is-home-team .rmss_c-schedule-game__team-name' ).first().text();
-                let away = $element.find( '.rmss_c-schedule-game__team.is-away-team .rmss_c-schedule-game__team-name' ).first().text();
-                let homeData = teamData( home );
-                let awayData = teamData( away );
-                home = homeData.name
-                away = awayData.name;
+                    if( !home || !away ) {
+                        console.log( `Unable to parse ${ summary } as home & away, skipping` );
 
-                const event = new ICAL.Component( 'vevent' );
-                event.addPropertyWithValue( 'uid', `${ game }-${ home }-${ away }` );
-                event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
-                event.addPropertyWithValue( 'description', `Omgång ${ game }` );
-                event.addPropertyWithValue( 'location', venue );
-                event.addPropertyWithValue( 'dtstart', ICAL.Time.fromString( start_date.format( momentFormat ) ) );
-                event.addPropertyWithValue( 'dtend', ICAL.Time.fromString( end_date.format( momentFormat ) ) );
-                event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
+                        return true;
+                    }
 
-                ha_games.push( {
-                    event: event,
-                    home: home,
-                    away: away,
+                    event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
+                    event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
+
+                    event.addPropertyWithValue( 'dtstart', vevent.getFirstPropertyValue( 'dtstart' ) );
+                    event.addPropertyWithValue( 'dtend', vevent.getFirstPropertyValue( 'dtend' ) );
+                    event.addPropertyWithValue( 'description', vevent.getFirstPropertyValue( 'description' ) );
+                    event.addPropertyWithValue( 'location', vevent.getFirstPropertyValue( 'location' ) );
+                    event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
+                    event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
+
+                    const homeData = teamData( home );
+                    const awayData = teamData( away );
+
+                    games.push( {
+                        event: event,
+                        home: homeData.name,
+                        away: awayData.name,
+                    } );
                 } );
-            } );
 
-            resolve();
+                resolve();
+
+                return true;
+            });
 
             return true;
-        });
-
-        return true;
+        } );
     });
 };
-
-const get_shl_games = () => {
-    return new Promise( ( resolve, reject ) => {
-        request( shl_url, ( error, response, body ) => {
-            if ( error ) {
-                reject( error );
-
-                return false;
-            }
-            const shl_data = ICAL.parse( body );
-            const component = new ICAL.Component( shl_data );
-
-            shl_games = [];
-            component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
-                let summary = vevent.getFirstPropertyValue( 'summary' );
-                const event = new ICAL.Component( 'vevent' );
-
-                // Check if the summary contains a number prefixed by a space
-                // Probably means it's a score
-                if ( /\s\d/.test( summary ) ) {
-                    let matches = summary.match( /(.+?)\s\d/ );
-
-                    summary = matches[ 1 ].trim();
-                }
-
-                const [ home, away ] = summary.split( ' - ' );
-
-                if( !home || !away ) {
-                    console.log( `Unable to parse ${ summary } as home & away, skipping` );
-
-                    return true;
-                }
-
-                event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
-                event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
-
-                event.addPropertyWithValue( 'dtstart', vevent.getFirstPropertyValue( 'dtstart' ) );
-                event.addPropertyWithValue( 'dtend', vevent.getFirstPropertyValue( 'dtend' ) );
-                event.addPropertyWithValue( 'description', vevent.getFirstPropertyValue( 'description' ) );
-                event.addPropertyWithValue( 'location', vevent.getFirstPropertyValue( 'location' ) );
-                event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
-                event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
-
-                const homeData = teamData( home );
-                const awayData = teamData( away );
-
-                shl_games.push( {
-                    event: event,
-                    home: homeData.name,
-                    away: awayData.name,
-                } );
-            } );
-
-            resolve();
-
-            return true;
-        });
-
-        return true;
-    } );
-};
-
 
 const update_games = function() {
     return new Promise( ( resolve, reject ) => {
@@ -160,8 +92,7 @@ const update_games = function() {
         lastFetch = new Date().getTime() / 1000;
 
         const updates = [];
-        updates.push( get_shl_games() );
-        updates.push( get_ha_games() );
+        updates.push( get_games() );
 
         Promise.all( updates )
             .then( () => {
@@ -206,15 +137,9 @@ const calendar = (f,cb) => {
 
     update_games()
         .then( () => {
-            for ( let i = 0; i < shl_games.length; i = i + 1 ) {
-                if ( include_teams.includes( shl_games[ i ].home ) || include_teams.includes( shl_games[ i ].away ) ) {
-                    calendar.addSubcomponent( shl_games[ i ].event );
-                }
-            }
-
-            for ( let i = 0; i < ha_games.length; i = i + 1 ) {
-                if ( include_teams.includes( ha_games[ i ].home ) || include_teams.includes( ha_games[ i ].away ) ) {
-                    calendar.addSubcomponent( ha_games[ i ].event );
+            for ( let i = 0; i < games.length; i = i + 1 ) {
+                if ( include_teams.includes( games[ i ].home ) || include_teams.includes( games[ i ].away ) ) {
+                    calendar.addSubcomponent( games[ i ].event );
                 }
             }
 
