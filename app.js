@@ -8,25 +8,21 @@ app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 
 const calendar = require('./modules/calendar');
 
-app.get('/calendar', (req, res) => {
-    calendar(req.query.team || [], ( calendarError, cal ) => {
-        if( calendarError ){
-            throw calendarError;
-        }
+app.get('/calendar', async (req, res) => {
+    const calendarString = await calendar(req.query.team || [] );
 
-        if (req.query.team) {
-            console.log(req.query.team);
-        } else {
-            console.log("no-filter");
-        };
+    if (req.query.team) {
+        console.log(req.query.team);
+    } else {
+        console.log("no-filter");
+    };
 
-        if( req.query.download ){
-            res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
-        }
+    if( req.query.download ){
+        res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
+    }
 
-        res.set('Content-Type', 'text/calendar');
-        res.send(cal);
-    });
+    res.set('Content-Type', 'text/calendar');
+    res.send(calendarString);
 });
 
 app.listen(app.get('port'), function () {

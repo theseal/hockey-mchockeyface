@@ -80,29 +80,27 @@ const update_games = function() {
     return get_games();
 };
 
-const calendar = (f,cb) => {
-    const filter = [].concat(f);
+const calendar = async (teams) => {
+    const filter = [].concat(teams);
     const calendar = new ICAL.Component( 'vcalendar' );
-    let include_teams = [];
+    let include_teams = filter.map((team) => {
+        const tempData = teamData( team );
+
+        return tempData.name;
+    });
+
+    if (include_teams.length === 0) {
+        const allTeams = teamData();
+
+        include_teams = allTeams.map((team) => {
+            return team.name;
+        });
+    }
 
     calendar.addPropertyWithValue( 'prodid', '-//Hockey McHF//Hockey McHockeyFace//EN' );
     calendar.addPropertyWithValue( 'version', '2.0' );
     calendar.addPropertyWithValue( 'calscale', 'GREGORIAN' );
     calendar.addPropertyWithValue( 'x-wr-timezone', 'Europe/Stockholm' );
-
-    filter.forEach(function(team) {
-        const tempData = teamData( team );
-        include_teams.push( tempData.name );
-    });
-
-    if ( include_teams.length === 0 ) {
-        const allTeams = teamData();
-
-        include_teams = allTeams.map( ( team ) => {
-            return team.name;
-        } );
-    }
-
     calendar.addPropertyWithValue( 'x-wr-calname', 'Svensk hockey' );
     calendar.addPropertyWithValue( 'x-wr-caldesc', 'Spelschema för svensk hockey' );
 
@@ -111,19 +109,15 @@ const calendar = (f,cb) => {
         calendar.updatePropertyWithValue( 'x-wr-caldesc', `Spelschema för ${ include_teams[ 0 ] }` );
     }
 
-    update_games()
-        .then( () => {
-            for ( let i = 0; i < games.length; i = i + 1 ) {
-                if ( include_teams.includes( games[ i ].home ) || include_teams.includes( games[ i ].away ) ) {
-                    calendar.addSubcomponent( games[ i ].event );
-                }
-            }
+    await update_games();
 
-            cb( null, calendar.toString() );
-        } )
-        .catch( ( someError ) => {
-            console.error( someError );
-        } );
+    for (let i = 0; i < games.length; i = i + 1) {
+        if ( include_teams.includes( games[ i ].home ) || include_teams.includes( games[ i ].away ) ) {
+            calendar.addSubcomponent( games[ i ].event );
+        }
+    }
+
+    return calendar.toString();
 };
 
 module.exports = calendar;
