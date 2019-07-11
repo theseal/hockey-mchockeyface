@@ -12,11 +12,12 @@ let lastFetch = false;
 
 const get_games = () => {
     games = [];
+    const gameUpdates = [];
 
-    const urlArray = [ ha_url, shl_url]
+    const urlArray = [ ha_url, shl_url];
 
     urlArray.forEach(function(url) {
-        return new Promise( ( resolve, reject ) => {
+        gameUpdates.push( new Promise( ( resolve, reject ) => {
             request( url, ( error, response, body ) => {
                 if ( error ) {
                     reject( error );
@@ -72,14 +73,14 @@ const get_games = () => {
             });
 
             return true;
-        } );
+        } ) );
     });
+
+    return Promise.all( gameUpdates );
 };
 
 const update_games = function() {
     return new Promise( ( resolve, reject ) => {
-        let fetch = true;
-
         const now = new Date().getTime() / 1000;
         const diff = now - 3600;
 
@@ -91,10 +92,7 @@ const update_games = function() {
 
         lastFetch = new Date().getTime() / 1000;
 
-        const updates = [];
-        updates.push( get_games() );
-
-        Promise.all( updates )
+        get_games()
             .then( () => {
                 resolve();
             })
