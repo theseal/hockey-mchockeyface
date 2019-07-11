@@ -1,5 +1,5 @@
 const ICAL = require( 'ical.js' );
-const request = require("request");
+const got = require( 'got' );
 
 const teamData = require( './teamdata' );
 
@@ -7,99 +7,77 @@ const shl_url = "https://calendar.ramses.nu/calendar/66/show/shl.ics";
 const ha_url = "https://calendar.ramses.nu/calendar/163/show/schema-19-20.ics";
 
 let games = [];
-
 let lastFetch = false;
 
-const get_games = () => {
-    games = [];
-    const gameUpdates = [];
+const get_games_from_calendar = async function get_games_from_calendar( calendarURL ) {
+    const calendarGames = [];
+    const response = await got( calendarURL );
+    const data = ICAL.parse( response.body );
+    const component = new ICAL.Component( data );
 
-    const urlArray = [ ha_url, shl_url];
+    console.log( `Updating games from ${ calendarURL }` );
 
-    urlArray.forEach(function(url) {
-        gameUpdates.push( new Promise( ( resolve, reject ) => {
-            request( url, ( error, response, body ) => {
-                if ( error ) {
-                    reject( error );
+    component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
+        let summary = vevent.getFirstPropertyValue( 'summary' );
+        const event = new ICAL.Component( 'vevent' );
 
-                    return false;
-                }
-                const data = ICAL.parse( body );
-                const component = new ICAL.Component( data );
+        // Check if the summary contains a number prefixed by a space
+        // Probably means it's a score
+        if ( /\s\d/.test( summary ) ) {
+            let matches = summary.match( /(.+?)\s\d/ );
 
-                component.getAllSubcomponents( 'vevent' ).forEach( ( vevent ) => {
-                    let summary = vevent.getFirstPropertyValue( 'summary' );
-                    const event = new ICAL.Component( 'vevent' );
+            summary = matches[ 1 ].trim();
+        }
 
-                    // Check if the summary contains a number prefixed by a space
-                    // Probably means it's a score
-                    if ( /\s\d/.test( summary ) ) {
-                        let matches = summary.match( /(.+?)\s\d/ );
+        const [ home, away ] = summary.split( ' - ' );
 
-                        summary = matches[ 1 ].trim();
-                    }
-
-                    const [ home, away ] = summary.split( ' - ' );
-
-                    if( !home || !away ) {
-                        console.log( `Unable to parse ${ summary } as home & away, skipping` );
-
-                        return true;
-                    }
-
-                    event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
-                    event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
-
-                    event.addPropertyWithValue( 'dtstart', vevent.getFirstPropertyValue( 'dtstart' ) );
-                    event.addPropertyWithValue( 'dtend', vevent.getFirstPropertyValue( 'dtend' ) );
-                    event.addPropertyWithValue( 'description', vevent.getFirstPropertyValue( 'description' ) );
-                    event.addPropertyWithValue( 'location', vevent.getFirstPropertyValue( 'location' ) );
-                    event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
-                    event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
-
-                    const homeData = teamData( home );
-                    const awayData = teamData( away );
-
-                    games.push( {
-                        event: event,
-                        home: homeData.name,
-                        away: awayData.name,
-                    } );
-                } );
-
-                resolve();
-
-                return true;
-            });
+        if( !home || !away ) {
+            console.log( `Unable to parse ${ summary } as home & away, skipping` );
 
             return true;
-        } ) );
-    });
+        }
 
-    return Promise.all( gameUpdates );
+        event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
+        event.addPropertyWithValue( 'summary', `${ home } - ${ away }` );
+
+        event.addPropertyWithValue( 'dtstart', vevent.getFirstPropertyValue( 'dtstart' ) );
+        event.addPropertyWithValue( 'dtend', vevent.getFirstPropertyValue( 'dtend' ) );
+        event.addPropertyWithValue( 'description', vevent.getFirstPropertyValue( 'description' ) );
+        event.addPropertyWithValue( 'location', vevent.getFirstPropertyValue( 'location' ) );
+        event.addPropertyWithValue( 'url', vevent.getFirstPropertyValue( 'url' ) );
+        event.addPropertyWithValue( 'uid', vevent.getFirstPropertyValue( 'uid' ) );
+
+        const homeData = teamData( home );
+        const awayData = teamData( away );
+
+        calendarGames.push( {
+            event: event,
+            home: homeData.name,
+            away: awayData.name,
+        } );
+    } );
+
+    return calendarGames;
+}
+
+const get_games = async () => {
+    const haGames = await get_games_from_calendar( ha_url );
+    const shlGames = await get_games_from_calendar( shl_url );
+
+    games = haGames.concat( shlGames );
 };
 
 const update_games = function() {
-    return new Promise( ( resolve, reject ) => {
-        const now = new Date().getTime() / 1000;
-        const diff = now - 3600;
+    const now = new Date().getTime() / 1000;
+    const diff = now - 3600;
 
-        if ( diff < lastFetch ) {
-            resolve();
+    if ( diff < lastFetch ) {
+        return Promise.resolve();
+    };
 
-            return true;
-        };
+    lastFetch = new Date().getTime() / 1000;
 
-        lastFetch = new Date().getTime() / 1000;
-
-        get_games()
-            .then( () => {
-                resolve();
-            })
-            .catch( ( someError ) => {
-                reject( someError );
-            });
-    });
+    return get_games();
 };
 
 const calendar = (f,cb) => {
@@ -128,7 +106,7 @@ const calendar = (f,cb) => {
     calendar.addPropertyWithValue( 'x-wr-calname', 'Svensk hockey' );
     calendar.addPropertyWithValue( 'x-wr-caldesc', 'Spelschema för svensk hockey' );
 
-    if( filter.length === 1 && filter[0]){
+    if(filter.length === 1 && filter[0]){
         calendar.updatePropertyWithValue( 'x-wr-calname', include_teams[ 0 ] );
         calendar.updatePropertyWithValue( 'x-wr-caldesc', `Spelschema för ${ include_teams[ 0 ] }` );
     }
