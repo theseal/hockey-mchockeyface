@@ -49,6 +49,18 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
 
         const homeData = teamData( home );
         const awayData = teamData( away );
+        
+        if ( !homeData ) {
+            console.error( `Failed to parse ${ home } as a team, skipping` );
+            
+            return true;
+        }
+        
+        if ( !awayData ) {
+            console.error( `Failed to parse ${ away } as a team, skipping` );
+            
+            return true;
+        }
 
         calendarGames.push( {
             event: event,
