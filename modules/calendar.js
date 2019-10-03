@@ -1,10 +1,15 @@
 const ICAL = require( 'ical.js' );
 const got = require( 'got' );
+const Notifyy = require( 'node-notifyy' );
 
 const teamData = require( './teamdata' );
 
 const shl_url = "https://calendar.ramses.nu/calendar/66/show/shl.ics";
 const ha_url = "https://calendar.ramses.nu/calendar/163/show/schema-19-20.ics";
+
+let notifyy = new Notifyy( {
+    users: process.env.NOTIFYY_USERS,
+} );
 
 let games = [];
 let lastFetch = false;
@@ -53,11 +58,21 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
         if ( !homeData ) {
             console.error( `Failed to parse ${ home } as a team, skipping` );
             
+            notifyy.send( {
+                title: 'Failed to parse team',
+                message: `Failed to parse "${ home }" as a team in Hockey McHockeyFace`,
+            } );
+            
             return true;
         }
         
         if ( !awayData ) {
             console.error( `Failed to parse ${ away } as a team, skipping` );
+            
+            notifyy.send( {
+                title: 'Failed to parse team',
+                message: `Failed to parse "${ away }" as a team in Hockey McHockeyFace`,
+            } );
             
             return true;
         }

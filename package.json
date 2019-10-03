@@ -16,6 +16,7 @@
     "got": "^9.6.0",
     "ical.js": "^1.3.0",
     "moment-timezone": "^0.5.26",
+    "node-notifyy": "^3.1.0",
     "serve-favicon": "2.5.0"
   },
   "repository": {
