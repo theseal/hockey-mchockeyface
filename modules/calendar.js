@@ -137,6 +137,15 @@ const calendar = async (teams) => {
     }
 
     await update_games();
+    
+    if (games.length <= 0) {
+        console.error( `Failed to load games for ${ teams } as requested` );
+            
+        notifyy.send( {
+            title: 'Failed to load games',
+            message: `Failed to load games for ${ teams } as requested in Hockey McHockeyFace`,
+        } );
+    }
 
     for (let i = 0; i < games.length; i = i + 1) {
         if ( include_teams.includes( games[ i ].home ) || include_teams.includes( games[ i ].away ) ) {

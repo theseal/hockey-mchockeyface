@@ -2,6 +2,8 @@ const express = require('express');
 const favicon = require('serve-favicon');
 const app = express();
 
+const teamData = require( './modules/teamdata' );
+
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static('static'));
 app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
@@ -9,6 +11,11 @@ app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 const calendar = require('./modules/calendar');
 
 app.get('/calendar', async (req, res) => {
+    if(req.query.team && !teamData(req.query.team)) {
+        res.sendStatus(404);
+        
+        return true;
+    }
     const calendarString = await calendar(req.query.team || [] );
 
     if (req.query.team) {
