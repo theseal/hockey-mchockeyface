@@ -54,26 +54,26 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
 
         const homeData = teamData( home );
         const awayData = teamData( away );
-        
+
         if ( !homeData ) {
             console.error( `Failed to parse ${ home } as a team, skipping` );
-            
+
             notifyy.send( {
                 title: 'Failed to parse team',
                 message: `Failed to parse "${ home }" as a team in Hockey McHockeyFace`,
             } );
-            
+
             return true;
         }
-        
+
         if ( !awayData ) {
             console.error( `Failed to parse ${ away } as a team, skipping` );
-            
+
             notifyy.send( {
                 title: 'Failed to parse team',
                 message: `Failed to parse "${ away }" as a team in Hockey McHockeyFace`,
             } );
-            
+
             return true;
         }
 
@@ -137,10 +137,10 @@ const calendar = async (teams) => {
     }
 
     await update_games();
-    
+
     if (games.length <= 0) {
         console.error( `Failed to load games for ${ teams } as requested` );
-            
+
         notifyy.send( {
             title: 'Failed to load games',
             message: `Failed to load games for ${ teams } as requested in Hockey McHockeyFace`,
