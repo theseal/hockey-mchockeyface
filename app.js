@@ -13,7 +13,7 @@ const calendar = require('./modules/calendar');
 app.get('/calendar', async (req, res) => {
     if(req.query.team && !teamData(req.query.team)) {
         res.sendStatus(404);
-        
+
         return true;
     }
     const calendarString = await calendar(req.query.team || [] );
