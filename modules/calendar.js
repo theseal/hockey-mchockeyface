@@ -5,7 +5,7 @@ const Notifyy = require( 'node-notifyy' );
 const teamData = require( './teamdata' );
 
 const shl_url = "https://calendar.ramses.nu/calendar/339/show/shl-2020-2021.ics";
-const ha_url = "https://calendar.ramses.nu/calendar/163/show/schema-19-20.ics";
+const ha_url = "https://calendar.ramses.nu/calendar/368/show/hockeyallsvenskan-2020-21.ics";
 
 let notifyy = new Notifyy( {
     users: process.env.NOTIFYY_USERS,
