@@ -3,8 +3,12 @@
 const shl_url = "https://www.shl.se";
 const ha_url = "https://www.hockeyallsvenskan.se";
 
+let league_dict = {};
+league_dict["SHL"] = { "url": "https://www.shl.se" };
+league_dict["HA"] = { "url": "https://www.hockeyallsvenskan.se" };
+
+
 const cheerio = require("cheerio");
-const url = "https://www.shl.se/";
 const got = require('got');
 
 const average = async () => {
@@ -12,6 +16,10 @@ const average = async () => {
     const array = [];
     let output = "";
     let response;
+
+    for (let leauge in league_dict){
+        output += `${leauge}:\n`
+        url = league_dict[leauge]["url"];
 
     try {
         response = await got(url);
@@ -69,6 +77,7 @@ const average = async () => {
         count++;
     }
 
+};
     return output;
 };
 
