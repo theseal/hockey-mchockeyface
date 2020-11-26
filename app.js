@@ -34,6 +34,7 @@ app.get('/calendar', async (req, res) => {
 });
 
 app.get('/average', async (req, res) => {
+  res.set('Content-Type', 'text/plain');
   res.send(await average());
 })
 
