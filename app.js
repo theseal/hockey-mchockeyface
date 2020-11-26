@@ -9,6 +9,7 @@ app.use(express.static('static'));
 app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 
 const calendar = require('./modules/calendar');
+const average = require('./modules/average');
 
 app.get('/calendar', async (req, res) => {
     if(req.query.team && !teamData(req.query.team)) {
@@ -31,6 +32,11 @@ app.get('/calendar', async (req, res) => {
     res.set('Content-Type', 'text/calendar');
     res.send(calendarString);
 });
+
+app.get('/average', (req, res) => {
+  const averageString = average();
+  res.send(averageString)
+})
 
 app.listen(app.get('port'), function () {
     console.log('Hockey McHockeyFace ready to serve on port', app.get('port'))
