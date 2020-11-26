@@ -33,9 +33,8 @@ app.get('/calendar', async (req, res) => {
     res.send(calendarString);
 });
 
-app.get('/average', (req, res) => {
-  const averageString = average();
-  res.send(averageString)
+app.get('/average', async (req, res) => {
+  res.send(await average());
 })
 
 app.listen(app.get('port'), function () {
