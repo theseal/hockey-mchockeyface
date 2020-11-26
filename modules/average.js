@@ -73,7 +73,9 @@ const average = async () => {
     let count = 1;
 
     for (let i in sorted) {
-        output += `${count} ${sorted[i]} ${dict[sorted[i]]["points"]} points in ${dict[sorted[i]]["games_played"]} games - average ${dict[sorted[i]]["average"]} (${dict[sorted[i]]["rank"]})\n`;
+        output = `${output}${count.toString().padEnd(3, ' ')}`;
+        output = `${output}${sorted[i].padEnd(17, ' ')}\t`;
+        output += `${dict[sorted[i]]["points"]} points    ${dict[sorted[i]]["games_played"]} games    average ${dict[sorted[i]]["average"]}    (${dict[sorted[i]]["rank"]})\n`;
         count++;
     }
 
