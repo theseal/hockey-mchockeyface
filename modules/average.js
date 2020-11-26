@@ -7,13 +7,12 @@ const cheerio = require("cheerio");
 const url = "https://www.shl.se/";
 const got = require('got');
 
-const average = () => {
+const average = async () => {
     var dict = {};
     var array = [];
     var output = "";
 
-    (async () => {
-        try {
+    try {
      const response = await got(url);
      const $ = cheerio.load(response.body, {
 decodeEntities: false,
@@ -65,7 +64,6 @@ decodeEntities: false,
     } catch (error) {
         console.log(error);
     }
-})();
 
 };
 
