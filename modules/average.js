@@ -12,14 +12,14 @@ const cheerio = require("cheerio");
 const got = require('got');
 
 const average = async () => {
-    const dict = {};
-    const array = [];
     let output = "";
     let response;
 
     for (let leauge in league_dict){
         output += `${leauge}:\n`
         url = league_dict[leauge]["url"];
+        const dict = {};
+        const array = [];
 
     try {
         response = await got(url);
