@@ -19,8 +19,6 @@ const average = async () => {
     for (let leauge in league_dict){
         output += `\n${leauge}:\n`
         url = league_dict[leauge]["url"];
-        const dict = {};
-        const array = [];
 
     try {
         response = await got(url);
@@ -33,6 +31,7 @@ const average = async () => {
     } );
     const teamsTable = $( '.rmss_t-team-statistics' );
 
+    const teams = [];
     teamsTable.find("tr").each( ( index, element ) => {
         const $element = $( element );
         const name = $element.find( '.rmss_t-team-statistics__name-long' ).first().text();
@@ -48,37 +47,29 @@ const average = async () => {
         const plusminus = stats[1];
         const points = stats[2];
         const average = (points / games_played).toFixed(2);
-        const dict_local = {};
-        dict_local[name] = {
+
+        teams.push({
+            "name": name,
             "rank": rank,
             "games_played": games_played,
             "plusminus": plusminus,
             "points": points,
             "average": average
-        };
-        dict[name] = {
-            "rank": rank,
-            "games_played": games_played,
-            "plusminus": plusminus,
-            "points": points,
-            "average": average
-        };
-        array.push(dict_local);
+        });
+
     });
-    const sorted = array
-        .map(x => Object.entries(x)[0])
-        .sort((a, b) => b[1].average - a[1].average)
-        .map(x => x[0]);
 
-    let count = 1;
+    teams.sort((a, b) => {
+        return b.average - a.average
+    });
 
-    for (let i in sorted) {
-        output = `${output}${count.toString().padEnd(3, ' ')}`;
-        output = `${output}${sorted[i].padEnd(17, ' ')}\t`;
-        output += `${dict[sorted[i]]["points"]} points    ${dict[sorted[i]]["games_played"]} games    average ${dict[sorted[i]]["average"]}    (${dict[sorted[i]]["rank"]})\n`;
-        count++;
-    }
-
+    let rank = 1;
+    for (let team of teams) {
+        output = `${output}${rank.toString().padEnd(3, ' ')}`;
+        output = `${output}${team.name.padEnd(17, ' ')}\t`;
+        output += `${team["points"]} points    ${team["games_played"]} games    average ${team["average"]}    (${team["rank"]})\n`;
+        rank += 1;
+    };
 };
     output += "\n\nPatches are welcome: https://github.com/theseal/hockey-mchockeyface\n";
     output += "https://hockey-mchockeyface.herokuapp.com";
