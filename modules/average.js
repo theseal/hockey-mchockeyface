@@ -12,11 +12,12 @@ const cheerio = require("cheerio");
 const got = require('got');
 
 const average = async () => {
-    let output = "";
+    let output = "Average standings for SHL and HA to easier understand this COVID-19 season.\n";
+    output += "The current position in parentheses.\n";
     let response;
 
     for (let leauge in league_dict){
-        output += `${leauge}:\n`
+        output += `\n${leauge}:\n`
         url = league_dict[leauge]["url"];
         const dict = {};
         const array = [];
@@ -72,7 +73,7 @@ const average = async () => {
     let count = 1;
 
     for (let i in sorted) {
-        output += `${count} ${sorted[i]} ${dict[sorted[i]]["points"]} poäng på ${dict[sorted[i]]["games_played"]} matcher - snitt ${dict[sorted[i]]["average"]} (${dict[sorted[i]]["rank"]})\n`;
+        output += `${count} ${sorted[i]} ${dict[sorted[i]]["points"]} points in ${dict[sorted[i]]["games_played"]} games - average ${dict[sorted[i]]["average"]} (${dict[sorted[i]]["rank"]})\n`;
         count++;
     }
 
