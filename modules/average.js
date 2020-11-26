@@ -78,6 +78,8 @@ const average = async () => {
     }
 
 };
+    output += "\n\nPatches are welcome: https://github.com/theseal/hockey-mchockeyface\n";
+    output += "https://hockey-mchockeyface.herokuapp.com";
     return output;
 };
 
