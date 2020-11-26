@@ -64,7 +64,6 @@ const average = async () => {
         };
         array.push(dict_local);
     });
-    console.log("fax");
     const sorted = array
         .map(x => Object.entries(x)[0])
         .sort((a, b) => b[1].average - a[1].average)
