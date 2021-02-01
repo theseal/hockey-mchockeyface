@@ -4,8 +4,16 @@ const shl_url = "https://www.shl.se";
 const ha_url = "https://www.hockeyallsvenskan.se";
 
 let league_dict = {};
-league_dict["SHL"] = { "url": "https://www.shl.se" };
-league_dict["HA"] = { "url": "https://www.hockeyallsvenskan.se" };
+league_dict["SHL"] = {
+    "url": "https://www.shl.se/statistik/tabell?season=2020&gameType=regular",
+    "plusminus": 9,
+    "points": 10
+};
+league_dict["HA"] = {
+    "url": "https://www.hockeyallsvenskan.se/statistik/tabell?season=2020&gameType=regular",
+    "plusminus": 11,
+    "points": 12
+};
 
 
 const cheerio = require("cheerio");
@@ -29,23 +37,23 @@ const average = async () => {
     const $ = cheerio.load(response.body, {
         decodeEntities: false,
     } );
-    const teamsTable = $( '.rmss_t-team-statistics' );
+    const teamsTable = $( '.rmss_t-stat-table' );
 
     const teams = [];
     teamsTable.find("tr").each( ( index, element ) => {
         const $element = $( element );
-        const name = $element.find( '.rmss_t-team-statistics__name-long' ).first().text();
+        const name = $element.find( '.rmss_t--pinned-hide' ).first().text();
         if (name == ''){
             return;
         }
 
-        const rank = $element.find( '.rmss_t-styled__team-rank' ).first().text();
-        const stats = $element.find( '.rmss_t-team-statistics__data').map(function() {
+        const stats = $element.find( '.rmss_t-stat-table__row-item').map(function() {
             return $(this).text();
         }).toArray();
-        const games_played = stats[0];
-        const plusminus = stats[1];
-        const points = stats[2];
+        const rank = stats[0];
+        const games_played = stats[2];
+        const plusminus = stats[league_dict[leauge]["plusminus"]];
+        const points = stats[league_dict[leauge]["points"]];
         const average = (points / games_played).toFixed(2);
 
         teams.push({
