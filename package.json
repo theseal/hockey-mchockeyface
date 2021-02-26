@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": " Useful tools for Svenska Hockeyligan ",
   "engines": {
-    "node": "12.6.0"
+    "node": "14.16.0"
   },
   "main": "app.js",
   "scripts": {
@@ -11,14 +11,12 @@
     "dev": "nodemon -r dotenv/config app.js"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "cheerio-tableparser": "^1.0.1",
+    "cheerio": "^1.0.0-rc.5",
     "express": "^4.17.1",
     "got": "^9.6.0",
     "ical.js": "^1.4.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.33",
     "node-notifyy": "^3.1.0",
-    "request": "^2.88.2",
     "serve-favicon": "2.5.0"
   },
   "repository": {
@@ -34,6 +32,6 @@
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.7"
   }
 }
