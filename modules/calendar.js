@@ -14,6 +14,13 @@ let notifyy = new Notifyy( {
 let games = [];
 let lastFetch = false;
 
+const TEMPORARY_PLAYOFF_NAMES = [
+    'Väljs av motståndare',
+    '1:a rankad vinnare från Quarterfinals',
+    '2:a rankad vinnare från Quarterfinals',
+    'PL.',
+];
+
 const get_games_from_calendar = async function get_games_from_calendar( calendarURL ) {
     const calendarGames = [];
     const response = await got( calendarURL );
@@ -58,6 +65,11 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
         if ( !homeData ) {
             console.error( `Failed to parse ${ home } as a team, skipping` );
 
+            // Team names used in the playoffs
+            if(TEMPORARY_PLAYOFF_NAMES.includes(home)){
+                return true;
+            }
+
             notifyy.send( {
                 title: 'Failed to parse team',
                 message: `Failed to parse "${ home }" as a team in Hockey McHockeyFace`,
@@ -68,6 +80,11 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
 
         if ( !awayData ) {
             console.error( `Failed to parse ${ away } as a team, skipping` );
+
+            // Team names used in the playoffs
+            if(TEMPORARY_PLAYOFF_NAMES.includes(away)){
+                return true;
+            }
 
             notifyy.send( {
                 title: 'Failed to parse team',
