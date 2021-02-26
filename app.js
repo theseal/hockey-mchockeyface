@@ -12,12 +12,32 @@ const calendar = require('./modules/calendar');
 const average = require('./modules/average');
 
 app.get('/calendar', async (req, res) => {
-    if(req.query.team && !teamData(req.query.team)) {
+    let requestedTeams = [];
+    if(req.query.team && Array.isArray(req.query.team)){
+        requestedTeams = req.query.team;
+    } else if (req.query.team){
+        requestedTeams = [req.query.team];
+    }
+
+    requestedTeams = requestedTeams.filter(teamName => {
+        const hasTeamData = teamData(teamName);
+
+        if( !hasTeamData ){
+            console.log(`Stripping unknown team ${teamName} from requested teams`);
+
+            return false;
+        }
+
+        return true;
+    });
+
+    if(req.query.team && requestedTeams.length === 0) {
         res.sendStatus(404);
 
         return true;
     }
-    const calendarString = await calendar(req.query.team || [] );
+
+    const calendarString = await calendar(requestedTeams);
 
     if (req.query.team) {
         console.log(req.query.team);
