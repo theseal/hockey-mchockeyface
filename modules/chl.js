@@ -33,8 +33,8 @@ module.exports = async () => {
 
         scheduledGames.push( {
             event: event,
-            home: homeData?.name || game.teams.home.name,
-            away: awayData?.name || game.teams.away.name,
+            home: homeData?.name || game.teams.home.name,
+            away: awayData?.name || game.teams.away.name,
         } );
     }
 
