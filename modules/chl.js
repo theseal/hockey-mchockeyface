@@ -20,12 +20,13 @@ module.exports = async () => {
         event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
         event.addPropertyWithValue( 'summary', `${ game.teams.home.name } - ${ game.teams.away.name }` );
 
+        const eventStart = new Date(game.startDate);
         const eventEnd = new Date(game.startDate);
         eventEnd.setHours(eventEnd.getHours() + 2)
         eventEnd.setMinutes(eventEnd.getMinutes() + 30);
 
-        event.addPropertyWithValue( 'dtstart', game.startDate );
-        event.addPropertyWithValue( 'dtend',  eventEnd.toISOString());
+        event.addPropertyWithValue( 'dtstart', eventStart.toISOString().slice(0,-5)+"Z" );
+        event.addPropertyWithValue( 'dtend',  eventEnd.toISOString().slice(0,-5)+"Z");
         event.addPropertyWithValue( 'description', `${ game.teams.home.name } - ${ game.teams.away.name }` );
         event.addPropertyWithValue( 'location', game.venue.name );
         event.addPropertyWithValue( 'url', `https://www.championshockeyleague.com/en${game.link.url}` );
