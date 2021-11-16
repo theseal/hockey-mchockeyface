@@ -49,7 +49,10 @@ app.get('/calendar', async (req, res) => {
         res.setHeader('Content-disposition', 'attachment; filename=hockey-mchockeyface.ics');
     }
 
-    res.set('Content-Type', 'text/calendar');
+    if(process.env.NODE_ENV !== 'development'){
+        res.set('Content-Type', 'text/calendar');
+    }
+
     res.send(calendarString);
 });
 
