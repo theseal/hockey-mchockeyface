@@ -3,6 +3,7 @@ const got = require( 'got' );
 const Notifyy = require( 'node-notifyy' );
 
 const teamData = require( './teamdata' );
+const chl = require('./chl');
 
 const shl_url = "https://calendar.ramses.nu/calendar/339/show/shl-2020-2021.ics";
 const ha_url = "https://calendar.ramses.nu/calendar/368/show/hockeyallsvenskan-2020-21.ics";
@@ -107,8 +108,9 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
 const get_games = async () => {
     const haGames = await get_games_from_calendar( ha_url );
     const shlGames = await get_games_from_calendar( shl_url );
+    const chlGames = await chl();
 
-    games = haGames.concat( shlGames );
+    games = haGames.concat( shlGames, chlGames );
 };
 
 const update_games = function() {
