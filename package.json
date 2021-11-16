@@ -13,7 +13,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
     "express": "^4.17.1",
-    "got": "^9.6.0",
+    "got": "^11.8.2",
     "ical.js": "^1.4.0",
     "moment-timezone": "^0.5.33",
     "node-notifyy": "^3.1.0",
