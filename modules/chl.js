@@ -28,7 +28,7 @@ module.exports = async () => {
         event.addPropertyWithValue( 'dtstart', eventStart.toISOString().slice(0,-5)+"Z" );
         event.addPropertyWithValue( 'dtend',  eventEnd.toISOString().slice(0,-5)+"Z");
         event.addPropertyWithValue( 'description', `${ game.teams.home.name } - ${ game.teams.away.name }` );
-        event.addPropertyWithValue( 'location', game.venue.name );
+        event.addPropertyWithValue( 'location', game.venue?.name || 'Unknown' );
         event.addPropertyWithValue( 'url', `https://www.championshockeyleague.com/en${game.link.url}` );
         event.addPropertyWithValue( 'uid', game._entityId );
 
