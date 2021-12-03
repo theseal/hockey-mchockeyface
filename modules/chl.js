@@ -18,7 +18,7 @@ module.exports = async () => {
         const awayData = teamData( game.teams.away.name );
 
         event.addPropertyWithValue( 'dtstamp', ICAL.Time.now() );
-        event.addPropertyWithValue( 'summary', `${ game.teams.home.name } - ${ game.teams.away.name }` );
+        event.addPropertyWithValue( 'summary', `${ homeData?.name || game.teams.home.name } - ${ awayData?.name || game.teams.away.name }` );
 
         const eventStart = new Date(game.startDate);
         const eventEnd = new Date(game.startDate);
@@ -27,7 +27,7 @@ module.exports = async () => {
 
         event.addPropertyWithValue( 'dtstart', eventStart.toISOString().slice(0,-5)+"Z" );
         event.addPropertyWithValue( 'dtend',  eventEnd.toISOString().slice(0,-5)+"Z");
-        event.addPropertyWithValue( 'description', `${ game.teams.home.name } - ${ game.teams.away.name }` );
+        event.addPropertyWithValue( 'description', `${ homeData?.name || game.teams.home.name } - ${ awayData?.name || game.teams.away.name }` );
         event.addPropertyWithValue( 'location', game.venue?.name || 'Unknown' );
         event.addPropertyWithValue( 'url', `https://www.championshockeyleague.com/en${game.link.url}` );
         event.addPropertyWithValue( 'uid', game._entityId );
