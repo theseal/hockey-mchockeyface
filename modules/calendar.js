@@ -8,9 +8,13 @@ const chl = require('./chl');
 const shl_url = "https://calendar.ramses.nu/calendar/339/show/shl-2020-2021.ics";
 const ha_url = "https://calendar.ramses.nu/calendar/368/show/hockeyallsvenskan-2020-21.ics";
 
-let notifyy = new Notifyy( {
-    users: process.env.NOTIFYY_USERS,
-} );
+let notifyy;
+
+if(process.env.NOTIFYY_USERS){
+    notifyy = new Notifyy( {
+        users: process.env.NOTIFYY_USERS,
+    } );
+}
 
 let games = [];
 let lastFetch = false;
@@ -71,10 +75,12 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
                 return true;
             }
 
-            notifyy.send( {
-                title: 'Failed to parse team',
-                message: `Failed to parse "${ home }" as a team in Hockey McHockeyFace`,
-            } );
+            if(notifyy){
+                notifyy.send( {
+                    title: 'Failed to parse team',
+                    message: `Failed to parse "${ home }" as a team in Hockey McHockeyFace`,
+                } );
+            }
 
             return true;
         }
@@ -87,10 +93,12 @@ const get_games_from_calendar = async function get_games_from_calendar( calendar
                 return true;
             }
 
-            notifyy.send( {
-                title: 'Failed to parse team',
-                message: `Failed to parse "${ away }" as a team in Hockey McHockeyFace`,
-            } );
+            if(notifyy){
+                notifyy.send( {
+                    title: 'Failed to parse team',
+                    message: `Failed to parse "${ away }" as a team in Hockey McHockeyFace`,
+                } );
+            }
 
             return true;
         }
@@ -160,10 +168,12 @@ const calendar = async (teams) => {
     if (games.length <= 0) {
         console.error( `Failed to load games for ${ teams } as requested` );
 
-        notifyy.send( {
-            title: 'Failed to load games',
-            message: `Failed to load games for ${ teams } as requested in Hockey McHockeyFace`,
-        } );
+        if(notifyy){
+            notifyy.send( {
+                title: 'Failed to load games',
+                message: `Failed to load games for ${ teams } as requested in Hockey McHockeyFace`,
+            } );
+        }
     }
 
     for (let i = 0; i < games.length; i = i + 1) {
