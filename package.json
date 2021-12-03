@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "NODE_ENV=development nodemon -r dotenv/config app.js"
+    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config app.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
@@ -31,6 +31,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "nodemon": "^2.0.7"
   }
