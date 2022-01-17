@@ -5,12 +5,12 @@ const ha_url = "https://www.hockeyallsvenskan.se";
 
 let league_dict = {};
 league_dict["SHL"] = {
-    "url": "https://www.shl.se/statistik/tabell?season=2020&gameType=regular",
+    "url": "https://www.shl.se/statistik/tabell?season=2021&gameType=regular",
     "plusminus": 9,
     "points": 10
 };
 league_dict["HA"] = {
-    "url": "https://www.hockeyallsvenskan.se/statistik/tabell?season=2020&gameType=regular",
+    "url": "https://www.hockeyallsvenskan.se/statistik/tabell?season=2021&gameType=regular",
     "plusminus": 11,
     "points": 12
 };
