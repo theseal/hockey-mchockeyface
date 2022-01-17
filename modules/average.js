@@ -11,8 +11,8 @@ league_dict["SHL"] = {
 };
 league_dict["HA"] = {
     "url": "https://www.hockeyallsvenskan.se/statistik/tabell?season=2021&gameType=regular",
-    "plusminus": 11,
-    "points": 12
+    "plusminus": 9,
+    "points": 10
 };
 
 
