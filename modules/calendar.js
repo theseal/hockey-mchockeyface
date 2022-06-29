@@ -6,7 +6,7 @@ const teamData = require( './teamdata' );
 const chl = require('./chl');
 
 const shl_url = "https://calendar.ramses.nu/calendar/748/show/shl-2022-2023.ics";
-const ha_url = "https://calendar.ramses.nu/calendar/368/show/hockeyallsvenskan-2020-21.ics";
+const ha_url = "https://calendar.ramses.nu/calendar/778/show/hockeyallsvenskan-2022-23.ics";
 
 let notifyy;
 
