@@ -5,6 +5,7 @@ const app = express();
 const teamData = require( './modules/teamdata' );
 
 app.set('port', (process.env.PORT || 5000));
+app.set('redirect_to', (process.env.REDIRECT_TO || false));
 app.use(express.static('static'));
 app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 
@@ -12,6 +13,12 @@ const calendar = require('./modules/calendar');
 const average = require('./modules/average');
 
 app.get('/calendar', async (req, res) => {
+    if ( app.get('redirect_to')){
+      if ( req.hostname !== app.get('redirect_to')){
+        res.redirect(301,'https://' + app.get('redirect_to') + req.originalUrl)
+        return;
+      }
+    }
     let requestedTeams = [];
     if(req.query.team && Array.isArray(req.query.team)){
         requestedTeams = req.query.team;
@@ -57,6 +64,12 @@ app.get('/calendar', async (req, res) => {
 });
 
 app.get('/average', async (req, res) => {
+  if ( app.get('redirect_to')){
+    if ( req.hostname !== app.get('redirect_to')){
+      res.redirect(301,'https://' + app.get('redirect_to') + req.originalUrl)
+      return;
+    }
+  }
   res.set('Content-Type', 'text/plain');
   res.send(await average());
 })
