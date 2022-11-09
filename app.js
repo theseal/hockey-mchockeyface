@@ -5,7 +5,18 @@ const app = express();
 const teamData = require( './modules/teamdata' );
 
 app.set('port', (process.env.PORT || 5000));
-app.use(express.static('static'));
+app.set('redirect_to', (process.env.REDIRECT_TO || false));
+
+app.use((req, res, next) => {
+    if ( app.get('redirect_to') && req.hostname !== app.get('redirect_to')){
+        return res.redirect(301,'https://' + app.get('redirect_to') + req.originalUrl);
+    }
+
+    next();
+});
+
+app.use(express.static(__dirname + '/static'));
+
 app.use(favicon(__dirname + '/static/images/noun_55243_cc.png'));
 
 const calendar = require('./modules/calendar');
