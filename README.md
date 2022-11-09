@@ -3,7 +3,7 @@ Useful tools for Svenska Hockeyligan.
 
 We begin to offer a selective way to use the offical SHL calender feed but we hope to provied other service(s) in the future.
 
-Hockey McHockeyFace can be found running [here](https://hockey-mchockeyface.herokuapp.com).
+Hockey McHockeyFace can be found running [here](https://hockey-mchockeyface.rymdvarel.se).
 
 ## Running Hockey McHockeyFace
 
