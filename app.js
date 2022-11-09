@@ -9,7 +9,7 @@ app.set('redirect_to', (process.env.REDIRECT_TO || false));
 
 app.use((req, res, next) => {
     if ( app.get('redirect_to') && req.hostname !== app.get('redirect_to')){
-        res.redirect(301,'https://' + app.get('redirect_to') + req.originalUrl);
+        return res.redirect(301,'https://' + app.get('redirect_to') + req.originalUrl);
     }
 
     next();
