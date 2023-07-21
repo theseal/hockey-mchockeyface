@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import logging
-import urllib.parse
 
 from flask import Flask, Response, render_template, request
 
