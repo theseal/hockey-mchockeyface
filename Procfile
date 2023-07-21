@@ -1,1 +1,1 @@
-web: gunicorn app:hockey-mchockeyface
+web: gunicorn hockey-mchockeyface:app
