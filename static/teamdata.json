@@ -1,0 +1,246 @@
+[
+    {
+        "key": "AIK",
+        "name": "AIK",
+        "alternateNames": [],
+        "homepage": "www.aikhockey.se"
+    },
+    {
+        "key": "AIS",
+        "name": "Almtuna IS",
+        "alternateNames": [
+            "Almtuna"
+        ]
+    },
+    {
+        "key": "IFB",
+        "name": "Björklöven",
+        "alternateNames": [
+            "IF Björklöven"
+        ]
+    },
+    {
+        "key": "BIK",
+        "name": "BIK Karlskoga",
+        "alternateNames": [
+            "Karlskoga"
+        ]
+    },
+    {
+        "key": "BIF",
+        "name": "Brynäs IF",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "DIF",
+        "name": "Djurgården",
+        "alternateNames": [
+            "Djurgården Hockey"
+        ]
+    },
+    {
+        "key": "FHC",
+        "name": "Frölunda HC",
+        "alternateNames": [
+            "Frölunda Gothenburg"
+        ]
+    },
+    {
+        "key": "FBK",
+        "name": "Färjestad BK",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "VIT",
+        "name": "HC Vita Hästen",
+        "alternateNames": [
+            "Vita Hästen"
+        ]
+    },
+    {
+        "key": "HV",
+        "name": "HV71",
+        "alternateNames": [
+            "HV71"
+        ]
+    },
+    {
+        "key": "TRO",
+        "name": "IF Troja-Ljungby",
+        "alternateNames": [
+            "Troja/Ljungby",
+            "Troja-Ljungby"
+        ]
+    },
+    {
+        "key": "IKO",
+        "name": "IK Oskarshamn",
+        "alternateNames": [
+            "Oskarshamn"
+        ]
+    },
+    {
+        "key": "PAN",
+        "name": "IK Pantern",
+        "alternateNames": [
+            "Pantern"
+        ]
+    },
+    {
+        "key": "KAL",
+        "name": "Kalmar HC",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "KHK",
+        "name": "Karlskrona HK",
+        "alternateNames": [
+            "Karlskrona"
+        ]
+    },
+    {
+        "key": "KIK",
+        "name": "Kristianstad",
+        "alternateNames": [
+            "Kristianstad IK",
+            "Kristianstads IK"
+        ]
+    },
+    {
+        "key": "LHC",
+        "name": "Linköping HC",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "LHF",
+        "name": "Luleå Hockey",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "MIF",
+        "name": "Malmö Redhawks",
+        "alternateNames": [
+            "MIF"
+        ]
+    },
+    {
+        "key": "MODO",
+        "name": "MODO Hockey",
+        "alternateNames": [
+            "MoDo",
+            "MoDo Hockey"
+        ]
+    },
+    {
+        "key": "MIK",
+        "name": "Mora IK",
+        "alternateNames": [
+            "Mora"
+        ]
+    },
+    {
+        "key": "NVIF",
+        "name": "Nybro Vikings IF",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "LIF",
+        "name": "Leksands IF",
+        "alternateNames": [
+            "Leksand"
+        ],
+        "homepage": "www.leksandsif.se"
+    },
+    {
+        "key": "RBK",
+        "name": "Rögle BK",
+        "alternateNames": [
+            "Rögle Ängelholm"
+        ]
+    },
+    {
+        "key": "SAIK",
+        "name": "Skellefteå AIK",
+        "alternateNames": [
+            "SKE"
+        ]
+    },
+    {
+        "key": "SSK",
+        "name": "Södertälje SK",
+        "alternateNames": [
+            "Södertälje",
+            "Södertälje SK Herr"
+        ]
+    },
+    {
+        "key": "TIK",
+        "name": "Timrå IK",
+        "alternateNames": [
+            "Timrå"
+        ]
+    },
+    {
+        "key": "TAIF",
+        "name": "Tingsryds AIF",
+        "alternateNames": [
+            "TAIF",
+            "Tingsryd"
+        ]
+    },
+    {
+        "key": "VSB",
+        "name": "Väsby IK",
+        "alternateNames": [
+            "Väsby",
+            "Väsby Hockey"
+        ]
+    },
+    {
+        "key": "VIK",
+        "name": "Västerås",
+        "alternateNames": [
+            "VIK Västerås HK",
+            "Västerås HK",
+            "Västerås IK"
+        ]
+    },
+    {
+        "key": "VVIK",
+        "name": "Västerviks IK",
+        "alternateNames": [
+            "VÄS",
+            "VVIK",
+            "Västervik"
+        ]
+    },
+    {
+        "key": "VLH",
+        "name": "Växjö Lakers",
+        "alternateNames": [
+            "VLH"
+        ]
+    },
+    {
+        "key": "ÖHK",
+        "name": "Örebro Hockey",
+        "alternateNames": [
+            "ÖRE",
+            "ORE"
+        ]
+    },
+    {
+        "key": "ÖST",
+        "name": "Östersunds IK",
+        "alternateNames": [
+            "ÖIK",
+            "OST"
+        ]
+    }
+]
