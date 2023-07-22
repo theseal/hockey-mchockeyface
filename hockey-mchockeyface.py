@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import logging
+import os
 
-from flask import Flask, Response, render_template, request
+from flask import Flask, Response, render_template, request, send_from_directory
 
 from hockeyface import hockeyface
 
@@ -16,6 +17,11 @@ hf = hockeyface()
 @app.route("/")
 def index_page():
     return render_template("index.html")
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "images/noun_55243_cc.png", mimetype="image/png")
 
 
 @app.route("/calendar")
