@@ -132,6 +132,7 @@ class hockeyface(object):
         cal.add("version", "2.0")
         cal.add("version", "2.0")
         cal.add("CALSCALE", "GREGORIAN")
+        dstamp = datetime.now().strftime("%Y%m%dT%H%M%S")
 
         desc = self.__pp_cal_name(teams)
         cal.add("X-WR-CALNAME", desc["CALNAME"])
@@ -142,6 +143,7 @@ class hockeyface(object):
             away = self.__pp_team_name(event["away"])
             ical_event = Event()
             ical_event.add("summary", f"{home} - {away}")
+            ical_event.add("dstamp", dstamp)
             ical_event.add("dtstart", datetime.fromisoformat(event["startDateTime"]))
             ical_event.add(
                 "dtend",
