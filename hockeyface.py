@@ -132,7 +132,7 @@ class hockeyface(object):
         cal.add("version", "2.0")
         cal.add("version", "2.0")
         cal.add("CALSCALE", "GREGORIAN")
-        dstamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+        dstamp = datetime.now()
 
         desc = self.__pp_cal_name(teams)
         cal.add("X-WR-CALNAME", desc["CALNAME"])
