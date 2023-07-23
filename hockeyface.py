@@ -143,7 +143,7 @@ class hockeyface(object):
             away = self.__pp_team_name(event["away"])
             ical_event = Event()
             ical_event.add("summary", f"{home} - {away}")
-            ical_event.add("dstamp", dstamp)
+            ical_event.add("dtstamp", dstamp)
             ical_event.add("dtstart", datetime.fromisoformat(event["startDateTime"]))
             ical_event.add(
                 "dtend",
