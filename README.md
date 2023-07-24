@@ -8,8 +8,8 @@ Hockey McHockeyFace can be found running [here](https://hockey-mchockeyface.rymd
 ## Running Hockey McHockeyFace
 
 ```
-$ npm install
-$ node app.js
+$ python -m pip install -r requirements.txt
+$ FLASK_APP=hockey-mchockeyface flask run
 ```
 ## Contributors
 * [TheSeal](https://github.com/theseal)
