@@ -126,6 +126,7 @@ class hockeyface(object):
         import uuid
         from datetime import datetime, timedelta
 
+        import pytz
         from icalendar import Calendar, Event
 
         cal = Calendar()
@@ -142,15 +143,15 @@ class hockeyface(object):
         for event in events:
             home = self.__pp_team_name(event["home"])
             away = self.__pp_team_name(event["away"])
+            event_start = datetime.fromisoformat(event["startDateTime"]).astimezone(pytz.timezone("Europe/Stockholm"))
+            event_end = event_start + timedelta(minutes=150)
+
             ical_event = Event()
             ical_event.add("summary", f"{home} - {away}")
             ical_event.add("uid", uuid.uuid4())
             ical_event.add("dtstamp", dstamp)
-            ical_event.add("dtstart", datetime.fromisoformat(event["startDateTime"]))
-            ical_event.add(
-                "dtend",
-                datetime.fromisoformat(event["startDateTime"]) + timedelta(minutes=150),
-            )
+            ical_event.add("dtstart", event_start)
+            ical_event.add("dtend", event_end)
 
             ical_event.add("location", event["venue"])
             cal.add_component(ical_event)
