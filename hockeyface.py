@@ -132,7 +132,6 @@ class hockeyface(object):
         cal = Calendar()
         cal.add("prodid", "-//Hockey McHF//Hockey McHockeyFace//EN")
         cal.add("version", "2.0")
-        cal.add("version", "2.0")
         cal.add("CALSCALE", "GREGORIAN")
         dstamp = datetime.now()
 
