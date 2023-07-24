@@ -142,7 +142,7 @@ class hockeyface(object):
         for event in events:
             home = self.__pp_team_name(event["home"])
             away = self.__pp_team_name(event["away"])
-            event_start = datetime.fromisoformat(event["startDateTime"]).astimezone(pytz.timezone("Europe/Stockholm"))
+            event_start = datetime.fromisoformat(event["startDateTime"]).astimezone(pytz.utc)
             event_end = event_start + timedelta(minutes=150)
 
             ical_event = Event()
