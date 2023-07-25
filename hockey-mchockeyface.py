@@ -19,12 +19,11 @@ hf = hockeyface()
 
 def ensure_domain(request):
     if redirect_to:
-        logger.debug(f"Redirect to {redirect_to} is configured")
         requested_domain = urlparse(request.url).netloc
         path = urlparse(request.url).path
         query = urlparse(request.url).query
         if requested_domain != redirect_to:
-            logger.debug(f"Creating direct from {requested_domain}")
+            logger.debug(f"Creating direct from {requested_domain} to {redirect_to}")
             return redirect(f"https://{redirect_to}{path}?{query}", code=301)
 
 
