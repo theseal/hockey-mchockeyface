@@ -28,36 +28,38 @@ class hockeyface(object):
         logger.info("Fetching events from upstream")
         events = []
 
-        leage_information = {
-            "shl": {
-                "url": "https://www.shl.se/api/sports/game-info?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-bb0bzEWUk&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all"
-            },
-            "ha": {
-                "url": "https://www.hockeyallsvenskan.se/api/sports/game-info?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all"
-            },
-        }
-
         for leage in ["shl", "ha"]:
             logger.debug(f"Processing {leage}")
 
-            r = requests.get(leage_information[leage]["url"])
-            returned_json = r.json()
-            for event in returned_json["gameInfo"]:
-                startDateTime = event["startDateTime"]
-                home = event["homeTeamInfo"]["names"]["code"]
-                away = event["awayTeamInfo"]["names"]["code"]
-                if event["venueInfo"]:
-                    venue = event["venueInfo"]["name"]
-                else:
-                    venue = ""
-                events.append(
-                    {
-                        "startDateTime": startDateTime,
-                        "home": home,
-                        "away": away,
-                        "venue": venue,
-                    }
-                )
+            for season in self.leage_information[leage]["seasonUuids"]:
+                for gametype in self.leage_information[leage]["gameTypeUuids"]:
+                    # Example URL
+                    # https://www.hockeyallsvenskan.se/api/sports/game-info?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
+
+                    r = requests.get(
+                        f"{self.leage_information[leage]['baseurl']}seasonUuid={season}&seriesUuid={self.leage_information[leage]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.leage_information[leage]['gamePlace']}&played={self.leage_information[leage]['played']}"
+                    )
+
+                    if r.headers["content-type"] == "application/json; charset=utf-8":
+                        returned_json = r.json()
+                        for event in returned_json["gameInfo"]:
+                            startDateTime = event["startDateTime"]
+                            home = event["homeTeamInfo"]["names"]["code"]
+                            away = event["awayTeamInfo"]["names"]["code"]
+                            if event["venueInfo"]:
+                                venue = event["venueInfo"]["name"]
+                            else:
+                                venue = ""
+                            events.append(
+                                {
+                                    "startDateTime": startDateTime,
+                                    "home": home,
+                                    "away": away,
+                                    "venue": venue,
+                                }
+                            )
+                    else:
+                        logger.debug(f"{leage} {season} {gametype} did not (yet?) respond with a json")
 
         self.last_updated = int(time.time())
         return events
@@ -160,5 +162,44 @@ class hockeyface(object):
     def __init__(self) -> None:
         logger.debug("Hockey McHockeyFace initiated")
         self.last_updated = 0
+        self.leage_information = {
+            "shl": {
+                "baseurl": "https://www.shl.se/api/sports/game-info?",
+                "seriesUuid": "qQ9-bb0bzEWUk",
+                "gameTypeUuids": [
+                    "qQ9-af37Ti40B",  # Seriematch
+                    "qRf-347BaDIOc",  # Kvalmatch nedflyttning
+                    "qQ9-7debq38kX",  # Slutspelsmatch
+                    "qQ9-46aa140wUl",  # Play in-match
+                ],
+                "gamePlace": "all",
+                "played": "all",
+                "seasonUuids": [
+                    "qcz-3NvSZ2Cmh",  # 2023/2024
+                    "qbN-XMFfjGVt",  # 2022/2023
+                    "qZl-8qa6OaFXf",  # 2021/2022
+                ],
+            },
+            "ha": {
+                "baseurl": "https://www.hockeyallsvenskan.se/api/sports/game-info?",
+                "seriesUuid": "qQ9-594cW8OWD",
+                "gameTypeUuids": [
+                    "qQ9-af37Ti40B",  # Seriematch
+                    "qRe-AJnJ12qqEc",  # Seriefinalmatch
+                    "qRe-AJkH2owyv",  # Slutspelsseriematch
+                    "qQ9-7debq38kX",  # Slutspelsmatch
+                    "qRe-AJog2gISz",  # Kvalmatch uppflyttning
+                    "qRf-347BaDIOc",  # Kvalmatch nedflyttning
+                    "qQ9-be68b0QHe",  # Vänskapsmatch
+                ],
+                "gamePlace": "all",
+                "played": "all",
+                "seasonUuids": [
+                    "qcz-3NvSZ2Cmh",  # 2023/2024
+                    "qbN-XMFfjGVt",  # 2022/2023
+                    "qZl-8qa6OaFXf",  # 2021/2022
+                ],
+            },
+        }
         self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
