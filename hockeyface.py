@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class hockeyface(object):
-    def get_events(self, teams):
+    def get_events(self, teams, leagues):
         import time
 
         now = int(time.time())
@@ -16,9 +16,9 @@ class hockeyface(object):
             self.__get_events()
 
         if not teams:
-            return self.events
+            return self.__filter_events([],leagues)
         else:
-            return self.__filter_events(teams)
+            return self.__filter_events(teams, leagues)
 
     def __get_events(self):
         import time
@@ -56,36 +56,65 @@ class hockeyface(object):
                                     "home": home,
                                     "away": away,
                                     "venue": venue,
+                                    "league": leage,
                                 }
                             )
                     else:
                         logger.debug(f"{leage} {season} {gametype} did not (yet?) respond with a json")
 
+        for leage in ["chl"]:
+            logger.debug(f"Processing {leage}")
+
+            for season in self.leage_information[leage]["seasonUuids"]:
+                # Example URL
+                #  https://www.championshockeyleague.com/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
+
+                r = requests.get(f"{self.leage_information[leage]['baseurl']}schedule-{season}.json")
+                returned_json = r.json()
+                for event in returned_json["data"]:
+                    startDateTime = event["startDate"]
+                    home = event["teams"]["home"]["name"]
+                    away = event["teams"]["away"]["name"]
+                    venue = event["venue"]["name"]
+                    events.append(
+                        {
+                            "startDateTime": startDateTime,
+                            "home": home,
+                            "away": away,
+                            "venue": venue,
+                            "league": leage,
+                        }
+                    )
+
         self.last_updated = int(time.time())
         return events
 
-    def __filter_events(self, teams):
+    def __filter_events(self, teams,leagues):
         events_to_return = []
         for event in self.events:
-            if event["home"] in teams:
-                events_to_return.append(event)
-            elif event["away"] in teams:
-                events_to_return.append(event)
-            else:
-                match = False
-                for team in self.teamdata:
-                    for name in team["alternateNames"]:
-                        if name == event["home"] or name == event["away"]:
-                            if team["key"] in teams:
-                                logger.warning(f"Match in alternativeNames for {name}: {event}")
-                                events_to_return.append(event)
-                                match = True
-                                break
-                    if match == True:
-                        break
+            if teams:
+                if event["home"] in teams:
+                    events_to_return.append(event)
+                elif event["away"] in teams:
+                    events_to_return.append(event)
+                else:
+                    match = False
+                    for team in self.teamdata:
+                        for name in team["alternateNames"]:
+                            if name == event["home"] or name == event["away"]:
+                                if team["key"] in teams:
+                                    logger.warning(f"Match in alternativeNames for {name}: {event}")
+                                    events_to_return.append(event)
+                                    match = True
+                                    break
+                        if match == True:
+                            break
 
-                # if match == False:
-                #    logger.debug(event)
+                    # if match == False:
+                    #    logger.debug(event)
+            else:
+                if event["league"] in leagues:
+                    events_to_return.append(event)
 
         return events_to_return
 
@@ -101,6 +130,8 @@ class hockeyface(object):
     def __pp_team_name(self, short):
         for team in self.teamdata:
             if team["key"] == short:
+                return team["name"]
+            if team["name"] == short:
                 return team["name"]
             for name in team["alternateNames"]:
                 if name == short:
@@ -200,6 +231,14 @@ class hockeyface(object):
                     "qZl-8qa6OaFXf",  # 2021/2022
                 ],
             },
+            "chl": {
+                "baseurl":  "https://www.championshockeyleague.com/api/s3?q=",
+                "seasonUuids": [
+                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba", # 2023/2024
+                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38", # 2022/2023
+
+                    ],
+                },
         }
         self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
