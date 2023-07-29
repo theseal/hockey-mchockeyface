@@ -55,7 +55,7 @@ def calendar():
     # Default to SHL and HA to keep previous behavior
     if not leagues:
         leagues = ["shl", "ha"]
-    events = hf.get_events(teams,leagues)
+    events = hf.get_events(teams, leagues)
     ical = hf.build_ical(events, teams)
 
     response = Response(response=ical, status=200, mimetype="text/calendar")

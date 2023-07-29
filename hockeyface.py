@@ -16,7 +16,7 @@ class hockeyface(object):
             self.__get_events()
 
         if not teams:
-            return self.__filter_events([],leagues)
+            return self.__filter_events([], leagues)
         else:
             return self.__filter_events(teams, leagues)
 
@@ -89,7 +89,7 @@ class hockeyface(object):
         self.last_updated = int(time.time())
         return events
 
-    def __filter_events(self, teams,leagues):
+    def __filter_events(self, teams, leagues):
         events_to_return = []
         for event in self.events:
             if teams:
@@ -232,13 +232,12 @@ class hockeyface(object):
                 ],
             },
             "chl": {
-                "baseurl":  "https://www.championshockeyleague.com/api/s3?q=",
+                "baseurl": "https://www.championshockeyleague.com/api/s3?q=",
                 "seasonUuids": [
-                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba", # 2023/2024
-                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38", # 2022/2023
-
-                    ],
-                },
+                    "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba",  # 2023/2024
+                    "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38",  # 2022/2023
+                ],
+            },
         }
         self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
