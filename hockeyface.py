@@ -100,6 +100,8 @@ class hockeyface(object):
                 else:
                     match = False
                     for team in self.teamdata:
+                        if team["key"] not in teams:
+                            continue
                         name = team["name"]
                         if name == event["home"] or name == event["away"]:
                             logger.warning(f"Match in name for {name}: {event}")
