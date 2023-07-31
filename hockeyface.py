@@ -28,16 +28,16 @@ class hockeyface(object):
         logger.info("Fetching events from upstream")
         events = []
 
-        for leauge in ["shl", "ha"]:
-            logger.debug(f"Processing {leauge}")
+        for league in ["shl", "ha", "sdhl"]:
+            logger.debug(f"Processing {league}")
 
-            for season in self.leauge_information[leauge]["seasonUuids"]:
-                for gametype in self.leauge_information[leauge]["gameTypeUuids"]:
+            for season in self.league_information[league]["seasonUuids"]:
+                for gametype in self.league_information[league]["gameTypeUuids"]:
                     # Example URL
                     # https://www.hockeyallsvenskan.se/api/sports/game-info?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
 
                     r = requests.get(
-                        f"{self.leauge_information[leauge]['baseurl']}seasonUuid={season}&seriesUuid={self.leauge_information[leauge]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.leauge_information[leauge]['gamePlace']}&played={self.leauge_information[leauge]['played']}"
+                        f"{self.league_information[league]['baseurl']}seasonUuid={season}&seriesUuid={self.league_information[league]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.league_information[league]['gamePlace']}&played={self.league_information[league]['played']}"
                     )
 
                     if r.headers["content-type"] == "application/json; charset=utf-8":
@@ -56,20 +56,20 @@ class hockeyface(object):
                                     "home": home,
                                     "away": away,
                                     "venue": venue,
-                                    "league": leauge,
+                                    "league": league,
                                 }
                             )
                     else:
-                        logger.debug(f"{leauge} {season} {gametype} did not (yet?) respond with a json")
+                        logger.debug(f"{league} {season} {gametype} did not (yet?) respond with a json")
 
-        for leauge in ["chl"]:
-            logger.debug(f"Processing {leauge}")
+        for league in ["chl"]:
+            logger.debug(f"Processing {league}")
 
-            for season in self.leauge_information[leauge]["seasonUuids"]:
+            for season in self.league_information[league]["seasonUuids"]:
                 # Example URL
                 #  https://www.championshockeyleague.com/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
 
-                r = requests.get(f"{self.leauge_information[leauge]['baseurl']}schedule-{season}.json")
+                r = requests.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
                 returned_json = r.json()
                 for event in returned_json["data"]:
                     startDateTime = event["startDate"]
@@ -82,7 +82,7 @@ class hockeyface(object):
                             "home": home,
                             "away": away,
                             "venue": venue,
-                            "league": leauge,
+                            "league": league,
                         }
                     )
 
@@ -202,7 +202,7 @@ class hockeyface(object):
     def __init__(self) -> None:
         logger.debug("Hockey McHockeyFace initiated")
         self.last_updated = 0
-        self.leauge_information = {
+        self.league_information = {
             "shl": {
                 "baseurl": "https://www.shl.se/api/sports/game-info?",
                 "seriesUuid": "qQ9-bb0bzEWUk",
