@@ -55,10 +55,28 @@
         ]
     },
     {
+        "key": "GHC",
+        "name": "Göteborg HC",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "HIF",
+        "name": "Hammarby IF",
+        "alternateNames": [
+        ]
+    },
+    {
         "key": "VIT",
         "name": "HC Vita Hästen",
         "alternateNames": [
             "Vita Hästen"
+        ]
+    },
+    {
+        "key": "HAN",
+        "name": "Haninge Anchors",
+        "alternateNames": [
         ]
     },
     {
@@ -122,6 +140,7 @@
         "key": "LHF",
         "name": "Luleå Hockey",
         "alternateNames": [
+            "LHF/MSSK",
             "Luleå Hockey"
         ]
     },
@@ -174,6 +193,18 @@
         "name": "Skellefteå AIK",
         "alternateNames": [
             "SKE"
+        ]
+    },
+    {
+        "key": "SDE",
+        "name": "SDE Hockey",
+        "alternateNames": [
+        ]
+    },
+    {
+        "key": "SHK",
+        "name": "SHK Hockey Club",
+        "alternateNames": [
         ]
     },
     {

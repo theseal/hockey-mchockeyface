@@ -256,6 +256,23 @@ class hockeyface(object):
                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38",  # 2022/2023
                 ],
             },
+            "sdhl": {
+                "baseurl": "https://www.sdhl.se/api/sports/game-info?",
+                "seriesUuid": "qQ9-f438G8BXP",
+                "gameTypeUuids": [
+                    "qQ9-af37Ti40B",  # Seriematch
+                    "qRe-AJog2gISz",  # Kvalmatch uppflyttning
+                    "qRf-347BaDIOc",  # Kvalmatch nedflyttning
+                    "qQ9-7debq38kX",  # Slutspelsmatch
+                ],
+                "gamePlace": "all",
+                "played": "all",
+                "seasonUuids": [
+                    "qcz-3NvSZ2Cmh",  # 2023/2024
+                    "qbN-XMFfjGVt",  # 2022/2023
+                    "qZl-8qa6OaFXf",  # 2021/2022
+                ],
+            },
         }
         self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
