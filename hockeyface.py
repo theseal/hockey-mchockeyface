@@ -99,6 +99,9 @@ class hockeyface(object):
         events_to_return = []
         for event in self.events:
             if teams:
+                if event["league"] not in leagues:
+                    continue
+
                 if event["home"] in teams:
                     events_to_return.append(event)
                 elif event["away"] in teams:
