@@ -28,7 +28,7 @@ class hockeyface(object):
         logger.info("Fetching events from upstream")
         events = []
 
-        for league in ["shl", "ha", "sdhl"]:
+        for league in ["SHL", "HA", "SDHL"]:
             logger.debug(f"Processing {league}")
 
             for season in self.league_information[league]["seasonUuids"]:
@@ -68,7 +68,7 @@ class hockeyface(object):
                     else:
                         logger.debug(f"{league} {season} {gametype} did not (yet?) respond with a json")
 
-        for league in ["chl"]:
+        for league in ["CHL"]:
             logger.debug(f"Processing {league}")
 
             for season in self.league_information[league]["seasonUuids"]:
@@ -212,7 +212,7 @@ class hockeyface(object):
         logger.debug("Hockey McHockeyFace initiated")
         self.last_updated = 0
         self.league_information = {
-            "shl": {
+            "SHL": {
                 "baseurl": "https://www.shl.se/api/sports/game-info?",
                 "seriesUuid": "qQ9-bb0bzEWUk",
                 "gameTypeUuids": [
@@ -229,7 +229,7 @@ class hockeyface(object):
                     "qZl-8qa6OaFXf",  # 2021/2022
                 ],
             },
-            "ha": {
+            "HA": {
                 "baseurl": "https://www.hockeyallsvenskan.se/api/sports/game-info?",
                 "seriesUuid": "qQ9-594cW8OWD",
                 "gameTypeUuids": [
@@ -249,14 +249,14 @@ class hockeyface(object):
                     "qZl-8qa6OaFXf",  # 2021/2022
                 ],
             },
-            "chl": {
+            "CHL": {
                 "baseurl": "https://www.championshockeyleague.com/api/s3?q=",
                 "seasonUuids": [
                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba",  # 2023/2024
                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38",  # 2022/2023
                 ],
             },
-            "sdhl": {
+            "SDHL": {
                 "baseurl": "https://www.sdhl.se/api/sports/game-info?",
                 "seriesUuid": "qQ9-f438G8BXP",
                 "gameTypeUuids": [

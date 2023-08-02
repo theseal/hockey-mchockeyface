@@ -54,11 +54,11 @@ def calendar():
     leagues = request.args.getlist("league")
     # Default to SHL and HA to keep previous behavior
     if not leagues:
-        leagues = ["shl", "ha"]
+        leagues = ["SHL", "HA"]
 
     # Teams in SHL might attend in CHL
-    if teams and "shl" in leagues:
-        leagues.append("chl")
+    if teams and "SHL" in leagues:
+        leagues.append("CHL")
 
     events = hf.get_events(teams, leagues)
     ical = hf.build_ical(events, teams)
