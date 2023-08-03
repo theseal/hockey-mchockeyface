@@ -54,9 +54,14 @@ def calendar():
     leagues = request.args.getlist("league")
     # Default to SHL and HA to keep previous behavior
     if not leagues:
-        leagues = ["shl", "ha"]
+        leagues = ["SHL", "HA"]
+
+    # Teams in SHL might attend in CHL
+    if teams and "SHL" in leagues:
+        leagues.append("CHL")
+
     events = hf.get_events(teams, leagues)
-    ical = hf.build_ical(events, teams)
+    ical = hf.build_ical(events, teams, leagues)
 
     response = Response(response=ical, status=200, mimetype="text/calendar")
     response.headers["Content-disposition"] = "attachment; filename=hockey-mchockeyface.ics"

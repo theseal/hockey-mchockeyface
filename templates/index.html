@@ -36,6 +36,10 @@
             border-radius: 3px;
         }
 
+        .wrapped-info {
+            font-size: 14px;
+        }
+
         .checkbox {
             bottom: 10px;
             left: 40px;
@@ -114,13 +118,11 @@
             Hockey McHockeyFace
         </h1>
         <p>
-            Get the games from SHL and HA (or just the team(s) you like) as calendar events.
+            Get the games from SHL, HA and SDHL (or just the team(s) you like) as calendar events.
         </p>
+        <h3>Select team(s)</h3>
         <div class="alert alert-info">
-            Select your team(s) by clicking on their logo. Copy the link
-            to the calendar feed or download the calendar file below.
-            If no teams are selected the calendar will include games
-            for ALL teams in HA and SHL.
+            Select your team(s) by clicking on their logo. If no team is selected all games from the selected leagues (below) will be included in the calendar.
         </div>
         <form class="form-group teams-wrapper" action="calendar" method="get">
             <input type="hidden" name="download" value="1">
@@ -221,6 +223,11 @@
             </div>
             <div class="team-wrapper js-team-wrapper">
                 <div class="checkbox">
+                    <label><input type="checkbox" name="team" value="SDE"><img src="static/images/SDE.jpg"></label>
+                </div>
+            </div>
+            <div class="team-wrapper js-team-wrapper">
+                <div class="checkbox">
                     <label><input type="checkbox" name="team" value="SKE"><img src="static/images/SKE.jpg"></label>
                 </div>
             </div>
@@ -269,6 +276,29 @@
                     <label><input type="checkbox" name="team" value="ÖIK"><img src="static/images/ÖIK.jpg"></label>
                 </div>
             </div>
+            <h3>Select league(s)</h3>
+            <div class="alert alert-info wrapped-info">
+                In which league(s) would you like to follow your team(s)? Select your league(s) by clicking on their logo. If no team is selected all games from the selected league will be included in the calendar.
+            </div>
+            <div class="team-wrapper js-team-wrapper active">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="league" value="SHL" checked><img src="static/images/SHL.jpg"></label>
+                </div>
+            </div>
+            <div class="team-wrapper js-team-wrapper active">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="league" value="HA" checked><img src="static/images/HA.jpg"></label>
+                </div>
+            </div>
+            <div class="team-wrapper js-team-wrapper">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="league" value="SDHL"><img src="static/images/SDHL.jpg"></label>
+                </div>
+            </div>
+        <h3>Subscribe or download</h3>
+        <div class="alert alert-info wrapped-info">
+            Copy the link to the calendar feed or download the calendar file below.
+        </div>
             <div class="form-group">
                 <input type="text" class="form-control js-url" id="url">
             </div>
@@ -294,12 +324,17 @@
     (function( $ ){
         function setUrl(){
             let teams = [];
+            let leagues = [];
 
             $( '[name="team"]:checked' ).each( function( index, element ){
                 teams.push( 'team=' + $( element ).val() );
             });
 
-            $( '.js-url' ).val( window.location.href + 'calendar?' + teams.join('&') );
+            $( '[name="league"]:checked' ).each( function( index, element ){
+                leagues.push( 'league=' + $( element ).val() );
+            });
+
+            $( '.js-url' ).val( window.location.href + 'calendar?' + leagues.join('&') + '&' + teams.join('&'));
         }
 
         $(function(){
@@ -308,6 +343,12 @@
             new Clipboard( '.js-copy-button' );
 
             $( 'body' ).on( 'change', '[name="team"]', function( event ){
+                setUrl();
+
+                $( event.currentTarget ).closest( '.js-team-wrapper' ).toggleClass( 'active' );
+            });
+
+            $( 'body' ).on( 'change', '[name="league"]', function( event ){
                 setUrl();
 
                 $( event.currentTarget ).closest( '.js-team-wrapper' ).toggleClass( 'active' );
