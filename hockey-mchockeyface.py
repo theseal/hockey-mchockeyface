@@ -61,7 +61,7 @@ def calendar():
         leagues.append("CHL")
 
     events = hf.get_events(teams, leagues)
-    ical = hf.build_ical(events, teams)
+    ical = hf.build_ical(events, teams, leagues)
 
     response = Response(response=ical, status=200, mimetype="text/calendar")
     response.headers["Content-disposition"] = "attachment; filename=hockey-mchockeyface.ics"

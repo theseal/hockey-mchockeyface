@@ -173,12 +173,13 @@ class hockeyface(object):
 
         return return_dict
 
-    def build_ical(self, events, teams):
+    def build_ical(self, events, teams, leagues):
         import uuid
         from datetime import datetime, timedelta
 
         import pytz
         from icalendar import Calendar, Event
+
 
         cal = Calendar()
         cal.add("prodid", "-//Hockey McHF//Hockey McHockeyFace//EN")
@@ -197,7 +198,11 @@ class hockeyface(object):
             event_end = event_start + timedelta(minutes=150)
 
             ical_event = Event()
-            ical_event.add("summary", f"{home} - {away}")
+            prefix_string = ""
+            if ("SHL" in leagues and "SDHL" in leagues) or event["league"] == "CHL":
+                prefix_string = f"{event['league']}: "
+
+            ical_event.add("summary", f"{prefix_string}{home} - {away}")
             ical_event.add("uid", uuid.uuid4())
             ical_event.add("dtstamp", dstamp)
             ical_event.add("dtstart", event_start)
