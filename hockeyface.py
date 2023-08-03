@@ -180,7 +180,6 @@ class hockeyface(object):
         import pytz
         from icalendar import Calendar, Event
 
-
         cal = Calendar()
         cal.add("prodid", "-//Hockey McHF//Hockey McHockeyFace//EN")
         cal.add("version", "2.0")
@@ -260,7 +259,6 @@ class hockeyface(object):
                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba",  # 2023/2024
                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38",  # 2022/2023
                     "21ec9dad81abe2e0240460d0-f73bbb143cc88c3ebe188d77",  # 2021/2022
-
                 ],
             },
             "SDHL": {
