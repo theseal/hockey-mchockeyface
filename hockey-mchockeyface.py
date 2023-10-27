@@ -108,6 +108,7 @@ def feed():
         fe.id(article["id"])
         fe.title(article["header"])
         fe.description(article["intro"])
+        fe.published(article["publishedAt"])
         fe.link(href=f"{team_store[team]['href']}/article/{article['id']}/view")
 
     response = Response(
