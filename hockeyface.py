@@ -81,7 +81,9 @@ class hockeyface(object):
                     startDateTime = event["startDate"]
                     home = event["teams"]["home"]["name"]
                     away = event["teams"]["away"]["name"]
-                    venue = event["venue"]["name"]
+                    venue = ""
+                    if "ventue" in event:
+                        venue = event["venue"]["name"]
                     events.append(
                         {
                             "startDateTime": startDateTime,
