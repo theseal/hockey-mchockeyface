@@ -72,6 +72,7 @@ def calendar():
 @app.route("/feed")
 def feed():
     import requests
+    import re
     from feedgen.feed import FeedGenerator
 
     team_store = {
@@ -107,7 +108,8 @@ def feed():
         fe = fg.add_entry()
         fe.id(article["id"])
         fe.title(article["header"])
-        fe.description(article["intro"])
+        description = re.sub(r"\\n", "\n", article["intro"]).strip('"')
+        fe.description(description)
         fe.published(article["publishedAt"])
         fe.link(href=f"{team_store[team]['href']}/article/{article['id']}/view")
 
