@@ -218,7 +218,6 @@ class hockeyface(object):
 
         from feedgen.feed import FeedGenerator
         import requests
-        import re
 
         index = 0
         match = False
@@ -254,8 +253,7 @@ class hockeyface(object):
             fe = fg.add_entry()
             fe.id(article["id"])
             fe.title(article["header"])
-            description = re.sub(r"\n", "<br>", article["intro"]).strip('"')
-            description = article["intro"].strip('"')
+            description =  article["intro"].replace('\\n','<br>').strip('"')
             fe.summary(description, type="html")
             fe.published(article["publishedAt"])
             fe.link(href=f"{self.teamdata[index]['article_baseurl']}/article/{article['id']}/view")
