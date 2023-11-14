@@ -214,6 +214,52 @@ class hockeyface(object):
 
         return cal.to_ical().decode("utf-8")
 
+    def build_rss(self, team, labels_to_skip):
+
+        from feedgen.feed import FeedGenerator
+        import requests
+
+        index = 0
+        match = False
+        for _team in self.teamdata:
+            print(_team)
+            if team == _team["key"]:
+                match = True
+                break
+            else:
+                index += 1
+
+        if not match:
+            return
+
+        if "rss_url" in self.teamdata[index]:
+            url = self.teamdata[index]["rss_url"]
+        else:
+            return
+
+        fg = FeedGenerator()
+        fg.id(f"Hockeyface {team}")
+        fg.link(href=self.teamdata[index]["article_baseurl"])
+        fg.title(self.teamdata[index]["name"])
+        fg.description(self.teamdata[index]["desc"])
+
+        r = requests.get(url)
+        returned_json = r.json()
+        for article in reversed(returned_json["data"]["articleItems"]):
+            if "label" in article["metadata"]:
+                if article["metadata"]["label"] in labels_to_skip:
+                    continue
+
+            fe = fg.add_entry()
+            fe.id(article["id"])
+            fe.title(article["header"])
+            description =  article["intro"].replace('\\n','<br>').strip('"')
+            fe.summary(description, type="html")
+            fe.published(article["publishedAt"])
+            fe.link(href=f"{self.teamdata[index]['article_baseurl']}/article/{article['id']}/view")
+
+        return fg.rss_str(pretty=True)
+
     def __init__(self) -> None:
         logger.debug("Hockey McHockeyFace initiated")
         self.last_updated = 0

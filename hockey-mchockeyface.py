@@ -4,7 +4,14 @@ import logging
 import os
 from urllib.parse import urlparse
 
-from flask import Flask, Response, redirect, render_template, request, send_from_directory
+from flask import (
+    Flask,
+    Response,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+)
 
 from hockeyface import hockeyface
 
@@ -41,7 +48,11 @@ def favicon():
     _redirect = ensure_domain(request)
     if _redirect:
         return _redirect
-    return send_from_directory(os.path.join(app.root_path, "static"), "images/noun_55243_cc.png", mimetype="image/png")
+    return send_from_directory(
+        os.path.join(app.root_path, "static"),
+        "images/noun_55243_cc.png",
+        mimetype="image/png",
+    )
 
 
 @app.route("/calendar")
@@ -64,6 +75,27 @@ def calendar():
     ical = hf.build_ical(events, teams, leagues)
 
     response = Response(response=ical, status=200, mimetype="text/calendar")
-    response.headers["Content-disposition"] = "attachment; filename=hockey-mchockeyface.ics"
+    response.headers[
+        "Content-disposition"
+    ] = "attachment; filename=hockey-mchockeyface.ics"
+
+    return response
+
+
+@app.route("/feed")
+def feed():
+
+    team = request.args.get("team")
+    labels_to_skip = request.args.getlist("labelToSkip")
+
+    rss = hf.build_rss(team,labels_to_skip)
+    if rss:
+        response = Response(
+            response=rss, status=200, mimetype="application/rss+xml"
+        )
+    else:
+        response = Response(
+            response=rss, status=500
+        )
 
     return response

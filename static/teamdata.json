@@ -178,7 +178,9 @@
         "alternateNames": [
             "Leksand"
         ],
-        "homepage": "www.leksandsif.se"
+        "article_baseurl": "https://www.leksandsif.se",
+        "rss_url": "https://www.leksandsif.se/api/articles/site-news/list?pagesize=15",
+        "desc": "Länkar till ariklar på Leksandsif.se"
     },
     {
         "key": "RBK",
