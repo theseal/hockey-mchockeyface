@@ -80,22 +80,3 @@ def calendar():
     ] = "attachment; filename=hockey-mchockeyface.ics"
 
     return response
-
-
-@app.route("/feed")
-def feed():
-
-    team = request.args.get("team")
-    labels_to_skip = request.args.getlist("labelToSkip")
-
-    rss = hf.build_rss(team,labels_to_skip)
-    if rss:
-        response = Response(
-            response=rss, status=200, mimetype="application/rss+xml"
-        )
-    else:
-        response = Response(
-            response=rss, status=500
-        )
-
-    return response
