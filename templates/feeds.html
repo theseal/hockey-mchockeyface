@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Hockey McHockeyFace (feeds)
+    </title>
+
+    <meta property="og:title" content="Hockey McHockeyFace feeds" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hockey-mchockeyface.rymdvarel.se/feeds" />
+    <meta property="og:image" content="https://hockey-mchockeyface.rymdvarel.se/static/images/noun_55243_cc_og.png" />
+    <meta property="og:description"
+        content="The official feeds for the teams" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+<style>
+
+        .container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+.table-image {
+  td, th {
+    vertical-align: middle;
+  }
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            Hockey McHockeyFace (feeds)
+        </h1>
+        <p>The official feeds for the teams - since they don't know themself that their feed exist</p>
+    </div>
+        <table class="table table-image">
+        <tr>
+          <th></th>
+          <th>Team</th>
+          <th>Feed address</th>
+        </tr>
+        {% for team in team_data %}
+        {% if team["ramses"] == true %}
+        <tr>
+                <td class="text-center" ><img src="static/images/{{team["key"]}}.jpg" style="height: 45px" ></td>
+                <td>{{team["name"]}}</td>
+                <td>https://{{team["homepage"]}}/api/articles/rss</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+    <div class="text-center">
+        <a href="https://github.com/theseal/hockey-mchockeyface">
+            <img src="static/images/GitHub-Mark-32px.png" class="rounded" alt="GitHub Mark">
+        </a>
+    </div>
+</body>
+<!-- The favicon, Hockey Mask by Spencer Loveless from the Noun Project - CC3.0 -->
+<!-- SHL – Hockeymördare -->
+
+</html>

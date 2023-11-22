@@ -3,41 +3,52 @@
         "key": "AIK",
         "name": "AIK",
         "alternateNames": [],
-        "homepage": "www.aikhockey.se"
+        "homepage": "www.aikhockey.se",
+        "ramses": true
     },
     {
         "key": "AIS",
         "name": "Almtuna IS",
         "alternateNames": [
             "Almtuna"
-        ]
+        ],
+        "homepage": "www.almtuna.com",
+        "ramses": true
     },
     {
         "key": "IFB",
         "name": "Björklöven",
         "alternateNames": [
             "IF Björklöven"
-        ]
+        ],
+        "homepage": "www.bjorkloven.com",
+        "ramses": true
     },
     {
         "key": "BIK",
         "name": "BIK Karlskoga",
         "alternateNames": [
             "Karlskoga"
-        ]
+        ],
+        "homepage": "www.bikkarlskoga.se",
+        "ramses": true
     },
     {
         "key": "BIF",
         "name": "Brynäs IF",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.brynas.se",
+        "ramses": true
     },
     {
         "key": "DIF",
         "name": "Djurgården",
         "alternateNames": [
             "Djurgården Hockey"
-        ]
+        ],
+        "homepage": "www.difhockey.se",
+        "ramses": true
     },
     {
         "key": "FHC",
@@ -45,46 +56,56 @@
         "alternateNames": [
             "FHC",
             "Frölunda Gothenburg"
-        ]
+        ],
+        "homepage": "www.frolundahockey.com",
+        "ramses": true
     },
     {
         "key": "FBK",
         "name": "Färjestad BK",
         "alternateNames": [
             "Färjestad Karlstad"
-        ]
+        ],
+        "homepage": "www.frolundahockey.com",
+        "ramses": true
     },
     {
         "key": "GHC",
         "name": "Göteborg HC",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "goteborghockeyclub.myclub.se"
     },
     {
         "key": "HIF",
         "name": "Hammarby IF",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.hammarbyhockey.se"
     },
     {
         "key": "VIT",
         "name": "HC Vita Hästen",
         "alternateNames": [
             "Vita Hästen"
-        ]
+        ],
+        "homepage": "www.vitahasten.se"
     },
     {
         "key": "HAN",
         "name": "Haninge Anchors",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.haningeanchors.se"
     },
     {
         "key": "HV",
         "name": "HV71",
         "alternateNames": [
             "HV71"
-        ]
+        ],
+        "homepage": "www.hv71.se",
+        "ramses": true
     },
     {
         "key": "TRO",
@@ -93,34 +114,44 @@
             "TRO",
             "Troja/Ljungby",
             "Troja-Ljungby"
-        ]
+        ],
+        "homepage": "www.troja-ljungby.com",
+        "ramses": true
     },
     {
         "key": "IKO",
         "name": "IK Oskarshamn",
         "alternateNames": [
             "Oskarshamn"
-        ]
+        ],
+        "homepage": "www.ikoskarshamn.se",
+        "ramses": true
     },
     {
         "key": "PAN",
         "name": "IK Pantern",
         "alternateNames": [
             "Pantern"
-        ]
+        ],
+        "homepage": "www.pantern.se"
     },
     {
         "key": "KAL",
         "name": "Kalmar HC",
         "alternateNames": [
-        ]
+            "KHC"
+        ],
+        "homepage": "www.kalmarhockey.com",
+        "ramses": true
     },
     {
         "key": "KHK",
         "name": "Karlskrona HK",
         "alternateNames": [
             "Karlskrona"
-        ]
+        ],
+        "homepage": "www.khk.se",
+        "ramses": true
     },
     {
         "key": "KIK",
@@ -128,13 +159,16 @@
         "alternateNames": [
             "Kristianstad IK",
             "Kristianstads IK"
-        ]
+        ],
+        "homepage": "www.kristianstadik.se"
     },
     {
         "key": "LHC",
         "name": "Linköping HC",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.lhc.eu",
+        "ramses": true
     },
     {
         "key": "LHF",
@@ -142,14 +176,18 @@
         "alternateNames": [
             "LHF/MSSK",
             "Luleå Hockey"
-        ]
+        ],
+        "homepage": "www.luleahockey.se",
+        "ramses": true
     },
     {
         "key": "MIF",
         "name": "Malmö Redhawks",
         "alternateNames": [
             "MIF"
-        ]
+        ],
+        "homepage": "www.malmoredhawks.com",
+        "ramses": true
     },
     {
         "key": "MODO",
@@ -157,20 +195,26 @@
         "alternateNames": [
             "MoDo",
             "MoDo Hockey"
-        ]
+        ],
+        "homepage": "www.modohockey.se",
+        "ramses": true
     },
     {
         "key": "MIK",
         "name": "Mora IK",
         "alternateNames": [
             "Mora"
-        ]
+        ],
+        "homepage": "www.moraik.se",
+        "ramses": true
     },
     {
         "key": "NVIF",
         "name": "Nybro Vikings IF",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.nybrovikings.com",
+        "ramses": true
     },
     {
         "key": "LIF",
@@ -178,9 +222,8 @@
         "alternateNames": [
             "Leksand"
         ],
-        "article_baseurl": "https://www.leksandsif.se",
-        "rss_url": "https://www.leksandsif.se/api/articles/site-news/list?pagesize=15",
-        "desc": "Länkar till ariklar på Leksandsif.se"
+        "homepage": "www.leksandsif.se",
+        "ramses": true
     },
     {
         "key": "RBK",
@@ -188,26 +231,32 @@
         "alternateNames": [
             "RBK",
             "Rögle Ängelholm"
-        ]
+        ],
+        "homepage": "www.roglebk.se",
+        "ramses": true
     },
     {
         "key": "SAIK",
         "name": "Skellefteå AIK",
         "alternateNames": [
             "SKE"
-        ]
+        ],
+        "homepage": "www.skellefteaaik.se",
+        "ramses": true
     },
     {
         "key": "SDE",
         "name": "SDE Hockey",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "https://sdehockey.se"
     },
     {
         "key": "SHK",
         "name": "SHK Hockey Club",
         "alternateNames": [
-        ]
+        ],
+        "homepage": "www.shkhockey.com"
     },
     {
         "key": "SSK",
@@ -215,14 +264,18 @@
         "alternateNames": [
             "Södertälje",
             "Södertälje SK Herr"
-        ]
+        ],
+        "homepage": "www.sodertaljesk.se",
+        "ramses": true
     },
     {
         "key": "TIK",
         "name": "Timrå IK",
         "alternateNames": [
             "Timrå"
-        ]
+        ],
+        "homepage": "www.timraik.se",
+        "ramses": true
     },
     {
         "key": "TAIF",
@@ -230,7 +283,9 @@
         "alternateNames": [
             "TAIF",
             "Tingsryd"
-        ]
+        ],
+        "homepage": "www.taif.nu",
+        "ramses": true
     },
     {
         "key": "VSB",
@@ -239,7 +294,8 @@
             "VSB",
             "Väsby Hockey",
             "Väsby"
-        ]
+        ],
+        "homepage": "www.hockeyettan.se/vasby-ik"
     },
     {
         "key": "VIK",
@@ -248,7 +304,9 @@
             "VIK Västerås HK",
             "Västerås HK",
             "Västerås IK"
-        ]
+        ],
+        "homepage": "www.vik.se",
+        "ramses": true
     },
     {
         "key": "VVIK",
@@ -257,14 +315,18 @@
             "VÄS",
             "VVIK",
             "Västervik"
-        ]
+        ],
+        "homepage": "www.vikhockey.se",
+        "ramses": true
     },
     {
         "key": "VLH",
         "name": "Växjö Lakers",
         "alternateNames": [
             "VLH"
-        ]
+        ],
+        "homepage": "www.vaxjolakers.se",
+        "ramses": true
     },
     {
         "key": "ÖHK",
@@ -272,7 +334,9 @@
         "alternateNames": [
             "ÖRE",
             "ORE"
-        ]
+        ],
+        "homepage": "www.orebrohockey.se",
+        "ramses": true
     },
     {
         "key": "ÖST",
@@ -280,6 +344,7 @@
         "alternateNames": [
             "ÖIK",
             "OST"
-        ]
+        ],
+        "homepage": "oik.ostersundik.com"
     }
 ]
