@@ -80,3 +80,8 @@ def calendar():
     ] = "attachment; filename=hockey-mchockeyface.ics"
 
     return response
+
+@app.route("/feeds")
+def feeds_page():
+
+    return render_template("feeds.html", team_data = hf.teamdata)
