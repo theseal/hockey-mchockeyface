@@ -230,6 +230,7 @@ class hockeyface(object):
                 "gamePlace": "all",
                 "played": "all",
                 "seasonUuids": [
+                    "qeb-73bZkIm9A",  # 2024/2025
                     "qcz-3NvSZ2Cmh",  # 2023/2024
                     "qbN-XMFfjGVt",  # 2022/2023
                     "qZl-8qa6OaFXf",  # 2021/2022
@@ -250,6 +251,7 @@ class hockeyface(object):
                 "gamePlace": "all",
                 "played": "all",
                 "seasonUuids": [
+                    "qeb-73bZkIm9A",  # 2024/2025
                     "qcz-3NvSZ2Cmh",  # 2023/2024
                     "qbN-XMFfjGVt",  # 2022/2023
                     "qZl-8qa6OaFXf",  # 2021/2022
@@ -275,6 +277,7 @@ class hockeyface(object):
                 "gamePlace": "all",
                 "played": "all",
                 "seasonUuids": [
+                    "qeb-73bZkIm9A", # 2024/2025
                     "qcz-3NvSZ2Cmh",  # 2023/2024
                     "qbN-XMFfjGVt",  # 2022/2023
                     "qZl-8qa6OaFXf",  # 2021/2022
