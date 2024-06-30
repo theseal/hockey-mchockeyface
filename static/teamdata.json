@@ -298,6 +298,14 @@
         "homepage": "www.hockeyettan.se/vasby-ik"
     },
     {
+        "key": "VHC",
+        "name": "Vimmerby HC",
+        "alternateNames": [
+            "VHC",
+        ],
+        "homepage": "https://www.hockeyettan.se/vimmerby-hockey/"
+    },
+    {
         "key": "VIK",
         "name": "Västerås",
         "alternateNames": [
