@@ -42,29 +42,32 @@ class hockeyface(object):
 
                     if r.headers["content-type"] == "application/json; charset=utf-8":
                         returned_json = r.json()
-                        for event in returned_json["gameInfo"]:
-                            startDateTime = event["startDateTime"]
-                            if "names" in event["homeTeamInfo"]:
-                                home = event["homeTeamInfo"]["names"]["code"]
-                            else:
-                                home = "TBD"
-                            if "names" in event["awayTeamInfo"]:
-                                away = event["awayTeamInfo"]["names"]["code"]
-                            else:
-                                away = "TBD"
-                            if event["venueInfo"]:
-                                venue = event["venueInfo"]["name"]
-                            else:
+                        if "gameInfo" in returned_json:
+                            for event in returned_json["gameInfo"]:
+                                startDateTime = event["startDateTime"]
+                                if "names" in event["homeTeamInfo"]:
+                                    home = event["homeTeamInfo"]["names"]["code"]
+                                else:
+                                    home = "TBD"
+                                if "names" in event["awayTeamInfo"]:
+                                    away = event["awayTeamInfo"]["names"]["code"]
+                                else:
+                                    away = "TBD"
                                 venue = ""
-                            events.append(
-                                {
-                                    "startDateTime": startDateTime,
-                                    "home": home,
-                                    "away": away,
-                                    "venue": venue,
-                                    "league": league,
-                                }
-                            )
+                                if "venueInfo" in event["venueInfo"]:
+                                    if "name" in event["venueInfo"]:
+                                        venue = event["venueInfo"]["name"]
+                                events.append(
+                                    {
+                                        "startDateTime": startDateTime,
+                                        "home": home,
+                                        "away": away,
+                                        "venue": venue,
+                                        "league": league,
+                                    }
+                                )
+                        else:
+                            logger.debug(f"{league} {season} {gametype} did not (yet?) respond with a json containing gameInfo")
                     else:
                         logger.debug(f"{league} {season} {gametype} did not (yet?) respond with a json")
 
