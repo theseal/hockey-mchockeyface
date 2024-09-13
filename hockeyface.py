@@ -44,7 +44,7 @@ class hockeyface(object):
                         returned_json = r.json()
                         if "gameInfo" in returned_json:
                             for event in returned_json["gameInfo"]:
-                                startDateTime = event["startDateTime"]
+                                startDateTime = event["rawStartDateTime"]
                                 if "names" in event["homeTeamInfo"]:
                                     home = event["homeTeamInfo"]["names"]["code"]
                                 else:
