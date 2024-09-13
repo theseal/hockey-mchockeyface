@@ -34,7 +34,7 @@ class hockeyface(object):
             for season in self.league_information[league]["seasonUuids"]:
                 for gametype in self.league_information[league]["gameTypeUuids"]:
                     # Example URL
-                    # https://www.hockeyallsvenskan.se/api/sports/game-info?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
+                    # https://www.hockeyallsvenskan.se/api/sports-v2/game-schedule?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
 
                     r = requests.get(
                         f"{self.league_information[league]['baseurl']}seasonUuid={season}&seriesUuid={self.league_information[league]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.league_information[league]['gamePlace']}&played={self.league_information[league]['played']}"
@@ -219,7 +219,7 @@ class hockeyface(object):
         self.last_updated = 0
         self.league_information = {
             "SHL": {
-                "baseurl": "https://www.shl.se/api/sports/game-info?",
+                "baseurl": "https://www.shl.se/api/sports-v2/game-schedule?",
                 "seriesUuid": "qQ9-bb0bzEWUk",
                 "gameTypeUuids": [
                     "qQ9-af37Ti40B",  # Seriematch
@@ -237,7 +237,7 @@ class hockeyface(object):
                 ],
             },
             "HA": {
-                "baseurl": "https://www.hockeyallsvenskan.se/api/sports/game-info?",
+                "baseurl": "https://www.hockeyallsvenskan.se/api/sports-v2/game-schedule?",
                 "seriesUuid": "qQ9-594cW8OWD",
                 "gameTypeUuids": [
                     "qQ9-af37Ti40B",  # Seriematch
@@ -266,7 +266,7 @@ class hockeyface(object):
                 ],
             },
             "SDHL": {
-                "baseurl": "https://www.sdhl.se/api/sports/game-info?",
+                "baseurl": "https://www.sdhl.se/api/sports-v2/game-schedule?",
                 "seriesUuid": "qQ9-f438G8BXP",
                 "gameTypeUuids": [
                     "qQ9-af37Ti40B",  # Seriematch
