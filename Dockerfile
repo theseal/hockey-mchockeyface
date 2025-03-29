@@ -7,4 +7,4 @@ WORKDIR /app
 
 RUN uv sync --frozen
 
-CMD ["uv","run","flask","--app","hockey-mchockeyface","run"]
+CMD ["uv","run","flask","--app","hockey-mchockeyface","run","--host=0.0.0.0"]

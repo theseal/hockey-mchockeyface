@@ -8,5 +8,6 @@ dependencies = [
     "flask>=2.3.2",
     "gunicorn>=22.0.0",
     "icalendar>=5.0.7",
+    "pytz>=2025.2",
     "requests>=2.32.0",
 ]
