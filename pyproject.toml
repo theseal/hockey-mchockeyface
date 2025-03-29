@@ -1,0 +1,12 @@
+[project]
+name = "hockey-mchockeyface"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask==2.3.2",
+    "gunicorn==22.0.0",
+    "icalendar==5.0.7",
+    "requests==2.32.0",
+]
