@@ -233,6 +233,7 @@ class hockeyface(object):
                 "gamePlace": "all",
                 "played": "all",
                 "seasonUuids": [
+                    "ndcf81nlb3", # 2026/2027
                     "xs4m9qupsi",  # 2025/2026
                     "qeb-73bZkIm9A",  # 2024/2025
                     "qcz-3NvSZ2Cmh",  # 2023/2024
@@ -264,6 +265,9 @@ class hockeyface(object):
             "CHL": {
                 "baseurl": "https://www.championshockeyleague.com/api/s3?q=",
                 "seasonUuids": [
+                    "21ec9dad81abe2e0240460d0-fc954f6d33272fdf4a8b95bb",  # 2020/2027
+                    "21ec9dad81abe2e0240460d0-3c5f99fa605394cc65733fc9",  # 2025/2026
+                    "21ec9dad81abe2e0240460d0-65772c03f5465c804a4fe7de",  # 2024/2025
                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba",  # 2023/2024
                     "21ec9dad81abe2e0240460d0-42d2f45345814558d4daff38",  # 2022/2023
                     "21ec9dad81abe2e0240460d0-f73bbb143cc88c3ebe188d77",  # 2021/2022
