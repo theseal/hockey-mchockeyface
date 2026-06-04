@@ -318,6 +318,15 @@
         "ramses": true
     },
     {
+        "key": "VIS",
+        "name": "Visby/Roma",
+        "alternateNames": [
+            "Visby/Roma HK"
+        ],
+        "homepage": "visbyroma.se",
+        "ramses": true
+    },
+    {
         "key": "VVIK",
         "name": "Västerviks IK",
         "alternateNames": [
