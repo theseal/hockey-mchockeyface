@@ -256,6 +256,8 @@ class hockeyface(object):
                 "gamePlace": "all",
                 "played": "all",
                 "seasonUuids": [
+                    "ndcf81nlb3", # 2026/2027
+                    "xs4m9qupsi", # 2025/2026
                     "qeb-73bZkIm9A",  # 2024/2025
                     "qcz-3NvSZ2Cmh",  # 2023/2024
                     "qbN-XMFfjGVt",  # 2022/2023
