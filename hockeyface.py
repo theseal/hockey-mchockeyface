@@ -242,7 +242,11 @@ class hockeyface(object):
                 ],
             },
             "HA": {
-                "baseurl": "https://www.hockeyallsvenskan.se/api/sports-v2/game-schedule?",
+                # hockeyallsvenskan.se moved to a Next.js/Strapi site in October
+                # 2026 and dropped this endpoint for every season. The same
+                # backend still answers on shl.se, where seriesUuid selects the
+                # league, so all HA seasons remain reachable there.
+                "baseurl": "https://www.shl.se/api/sports-v2/game-schedule?",
                 "seriesUuid": "qQ9-594cW8OWD",
                 "gameTypeUuids": [
                     "qQ9-af37Ti40B",  # Seriematch
