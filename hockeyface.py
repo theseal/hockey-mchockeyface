@@ -13,7 +13,7 @@ class hockeyface(object):
         now = int(time.time())
         if (self.last_updated + 3600) <= now:
             logger.debug(f"Invalidating cache (last_updated: {self.last_updated})")
-            self.__get_events()
+            self.events = self.__get_events()
 
         if not teams:
             return self.__filter_events([], leagues)
@@ -54,9 +54,8 @@ class hockeyface(object):
                                 else:
                                     away = "TBD"
                                 venue = ""
-                                if "venueInfo" in event["venueInfo"]:
-                                    if "name" in event["venueInfo"]:
-                                        venue = event["venueInfo"]["name"]
+                                if "name" in event["venueInfo"]:
+                                    venue = event["venueInfo"]["name"]
                                 events.append(
                                     {
                                         "startDateTime": startDateTime,
@@ -85,7 +84,7 @@ class hockeyface(object):
                     home = event["teams"]["home"]["name"]
                     away = event["teams"]["away"]["name"]
                     venue = ""
-                    if "ventue" in event:
+                    if "venue" in event:
                         venue = event["venue"]["name"]
                     events.append(
                         {
