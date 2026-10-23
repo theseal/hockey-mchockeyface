@@ -53,6 +53,8 @@ class hockeyface(object):
     def __get_events(self):
         import time
 
+        import requests
+
         logger.info("Fetching events from upstream")
         events = []
 
@@ -64,9 +66,14 @@ class hockeyface(object):
                     # Example URL
                     # https://www.hockeyallsvenskan.se/api/sports-v2/game-schedule?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
 
-                    r = self.session.get(
-                        f"{self.league_information[league]['baseurl']}seasonUuid={season}&seriesUuid={self.league_information[league]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.league_information[league]['gamePlace']}&played={self.league_information[league]['played']}"
-                    )
+                    try:
+                        r = self.session.get(
+                            f"{self.league_information[league]['baseurl']}seasonUuid={season}&seriesUuid={self.league_information[league]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.league_information[league]['gamePlace']}&played={self.league_information[league]['played']}",
+                            timeout=30,
+                        )
+                    except requests.RequestException as e:
+                        logger.warning(f"{league} {season} {gametype}: {e}")
+                        continue
 
                     if r.headers["content-type"] == "application/json; charset=utf-8":
                         returned_json = r.json()
@@ -105,7 +112,14 @@ class hockeyface(object):
                 # Example URL
                 #  https://www.chl.hockey/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
 
-                r = self.session.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
+                try:
+                    r = self.session.get(
+                        f"{self.league_information[league]['baseurl']}schedule-{season}.json",
+                        timeout=30,
+                    )
+                except requests.RequestException as e:
+                    logger.warning(f"{league} {season}: {e}")
+                    continue
                 try:
                     returned_json = r.json()
                 except ValueError:
