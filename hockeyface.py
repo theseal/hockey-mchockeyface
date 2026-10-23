@@ -194,7 +194,7 @@ class hockeyface(object):
                 if name == short:
                     return team["name"]
 
-        logger.warn(f"No match for '{short}'")
+        logger.warning(f"No match for '{short}'")
         return short
 
     def __pp_cal_name(self, teams):
