@@ -1,5 +1,5 @@
-FROM python:3.12-bullseye
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+FROM python:3.13-slim-trixie
+COPY --from=ghcr.io/astral-sh/uv:0.13 /uv /uvx /bin/
 
 ADD . /app
 
