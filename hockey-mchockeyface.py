@@ -17,7 +17,10 @@ from hockeyface import hockeyface
 
 redirect_to = os.environ.get("REDIRECT_TO")
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO").upper())
+# Per-request library chatter drowns out the app's own debug output
+for noisy_logger in ("requests_cache", "urllib3"):
+    logging.getLogger(noisy_logger).setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
