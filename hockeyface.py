@@ -106,7 +106,14 @@ class hockeyface(object):
                 #  https://www.championshockeyleague.com/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
 
                 r = self.session.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
-                returned_json = r.json()
+                try:
+                    returned_json = r.json()
+                except ValueError:
+                    logger.debug(f"{league} {season} did not (yet?) respond with a json")
+                    continue
+                if "data" not in returned_json:
+                    logger.debug(f"{league} {season} did not (yet?) respond with a json containing data")
+                    continue
                 for event in returned_json["data"]:
                     startDateTime = event["startDate"]
                     home = event["teams"]["home"]["name"]
