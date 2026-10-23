@@ -10,4 +10,5 @@ dependencies = [
     "icalendar>=5.0.7",
     "pytz>=2025.2",
     "requests>=2.32.0",
+    "requests-cache>=1.2.0",
 ]

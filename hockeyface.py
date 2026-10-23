@@ -20,10 +20,40 @@ class hockeyface(object):
         else:
             return self.__filter_events(teams, leagues)
 
+    def __build_session(self):
+        """Return an HTTP session that caches upstream responses on disk.
+
+        The first entry in each league's seasonUuids is taken as the current
+        season and refreshed hourly; older seasons are finished and kept
+        forever. If a refresh fails, the last good response is served for up
+        to a week.
+        """
+        from datetime import timedelta
+
+        import requests_cache
+
+        current_seasons = {info["seasonUuids"][0] for info in self.league_information.values()}
+        urls_expire_after = {f"*{season}*": 3600 for season in current_seasons}
+        urls_expire_after["*"] = requests_cache.NEVER_EXPIRE
+
+        def is_valid_json(response):
+            # Keeps maintenance pages served with 200 from replacing good data
+            try:
+                response.json()
+            except ValueError:
+                return False
+            return True
+
+        return requests_cache.CachedSession(
+            "cache/hockey",
+            backend="sqlite",
+            urls_expire_after=urls_expire_after,
+            stale_if_error=timedelta(days=7),
+            filter_fn=is_valid_json,
+        )
+
     def __get_events(self):
         import time
-
-        import requests
 
         logger.info("Fetching events from upstream")
         events = []
@@ -36,7 +66,7 @@ class hockeyface(object):
                     # Example URL
                     # https://www.hockeyallsvenskan.se/api/sports-v2/game-schedule?seasonUuid=qcz-3NvSZ2Cmh&seriesUuid=qQ9-594cW8OWD&gameTypeUuid=qQ9-af37Ti40B&gamePlace=all&played=all
 
-                    r = requests.get(
+                    r = self.session.get(
                         f"{self.league_information[league]['baseurl']}seasonUuid={season}&seriesUuid={self.league_information[league]['seriesUuid']}&gameTypeUuid={gametype}&gamePlace={self.league_information[league]['gamePlace']}&played={self.league_information[league]['played']}"
                     )
 
@@ -77,7 +107,7 @@ class hockeyface(object):
                 # Example URL
                 #  https://www.championshockeyleague.com/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
 
-                r = requests.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
+                r = self.session.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
                 returned_json = r.json()
                 for event in returned_json["data"]:
                     startDateTime = event["startDate"]
@@ -206,7 +236,14 @@ class hockeyface(object):
                 prefix_string = f"{event['league']}: "
 
             ical_event.add("summary", f"{prefix_string}{home} - {away}")
-            ical_event.add("uid", uuid.uuid4())
+            # Stable across requests so calendar clients update instead of duplicating
+            ical_event.add(
+                "uid",
+                uuid.uuid5(
+                    uuid.NAMESPACE_URL,
+                    f"{event['league']}/{event['startDateTime']}/{event['home']}/{event['away']}",
+                ),
+            )
             ical_event.add("dtstamp", dstamp)
             ical_event.add("dtstart", event_start)
             ical_event.add("dtend", event_end)
@@ -297,5 +334,6 @@ class hockeyface(object):
                 ],
             },
         }
+        self.session = self.__build_session()
         self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
