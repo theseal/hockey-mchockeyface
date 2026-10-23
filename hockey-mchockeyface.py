@@ -13,7 +13,7 @@ from flask import (
     send_from_directory,
 )
 
-from hockeyface import hockeyface
+from hockeyface import EventsNotLoaded, hockeyface
 
 redirect_to = os.environ.get("REDIRECT_TO")
 
@@ -74,7 +74,15 @@ def calendar():
     if teams and "SHL" in leagues:
         leagues.append("CHL")
 
-    events = hf.get_events(teams, leagues)
+    try:
+        events = hf.get_events(teams, leagues)
+    except EventsNotLoaded:
+        return Response(
+            response="Schedules are still loading, try again shortly\n",
+            status=503,
+            mimetype="text/plain",
+            headers={"Retry-After": "60"},
+        )
     ical = hf.build_ical(events, teams, leagues)
 
     response = Response(response=ical, status=200, mimetype="text/calendar")

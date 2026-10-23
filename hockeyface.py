@@ -6,19 +6,33 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+class EventsNotLoaded(Exception):
+    """Raised when the first fetch of events has not finished yet."""
+
+
 class hockeyface(object):
     def get_events(self, teams, leagues):
+        """Return events for the given teams and leagues.
+
+        Raises EventsNotLoaded if the first background fetch has not finished
+        within ten seconds.
+        """
+        if not self.events_loaded.wait(timeout=10):
+            raise EventsNotLoaded()
+        return self.__filter_events(teams, leagues)
+
+    def __refresh_events(self):
+        """Fetch events hourly, keeping the previous ones if a fetch fails."""
         import time
 
-        now = int(time.time())
-        if (self.last_updated + 3600) <= now:
-            logger.debug(f"Invalidating cache (last_updated: {self.last_updated})")
-            self.events = self.__get_events()
-
-        if not teams:
-            return self.__filter_events([], leagues)
-        else:
-            return self.__filter_events(teams, leagues)
+        while True:
+            try:
+                self.events = self.__get_events()
+                self.events_loaded.set()
+            except Exception:
+                logger.exception("Fetching events failed; keeping the previous ones")
+            # Retry soon while nothing has loaded, so a failed first fetch does not leave the app empty for an hour
+            time.sleep(3600 if self.events_loaded.is_set() else 60)
 
     def __build_session(self):
         """Return an HTTP session that caches upstream responses on disk.
@@ -51,8 +65,6 @@ class hockeyface(object):
         )
 
     def __get_events(self):
-        import time
-
         import requests
 
         logger.info("Fetching events from upstream")
@@ -145,7 +157,6 @@ class hockeyface(object):
                         }
                     )
 
-        self.last_updated = int(time.time())
         return events
 
     def __filter_events(self, teams, leagues):
@@ -273,8 +284,9 @@ class hockeyface(object):
         return cal.to_ical().decode("utf-8")
 
     def __init__(self) -> None:
+        import threading
+
         logger.debug("Hockey McHockeyFace initiated")
-        self.last_updated = 0
         self.league_information = {
             "SHL": {
                 "baseurl": "https://www.shl.se/api/sports-v2/game-schedule?",
@@ -356,5 +368,7 @@ class hockeyface(object):
             },
         }
         self.session = self.__build_session()
-        self.events = self.__get_events()
         self.teamdata = self.__build_teamdata()
+        self.events = []
+        self.events_loaded = threading.Event()
+        threading.Thread(target=self.__refresh_events, name="refresh-events", daemon=True).start()
