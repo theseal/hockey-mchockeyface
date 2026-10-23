@@ -104,6 +104,9 @@ db.sqlite3-journal
 # Upstream HTTP cache
 cache/
 
+# Claude Code local settings
+.claude/
+
 # Flask stuff:
 instance/
 .webassets-cache
