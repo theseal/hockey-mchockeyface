@@ -312,7 +312,7 @@ class hockeyface(object):
             "CHL": {
                 "baseurl": "https://www.chl.hockey/api/s3?q=",
                 "seasonUuids": [
-                    "21ec9dad81abe2e0240460d0-fc954f6d33272fdf4a8b95bb",  # 2020/2027
+                    "21ec9dad81abe2e0240460d0-fc954f6d33272fdf4a8b95bb",  # 2026/2027
                     "21ec9dad81abe2e0240460d0-3c5f99fa605394cc65733fc9",  # 2025/2026
                     "21ec9dad81abe2e0240460d0-65772c03f5465c804a4fe7de",  # 2024/2025
                     "21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba",  # 2023/2024
