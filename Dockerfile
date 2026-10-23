@@ -7,4 +7,4 @@ WORKDIR /app
 
 RUN uv sync --locked
 
-CMD ["uv","run","flask","--app","hockey-mchockeyface","run","--host=0.0.0.0"]
+CMD ["uv","run","gunicorn","--bind","0.0.0.0:5000","--workers","1","--threads","4","--timeout","120","hockey-mchockeyface:app"]
