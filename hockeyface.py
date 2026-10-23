@@ -25,11 +25,9 @@ class hockeyface(object):
 
         The first entry in each league's seasonUuids is taken as the current
         season and refreshed hourly; older seasons are finished and kept
-        forever. If a refresh fails, the last good response is served for up
-        to a week.
+        forever. If a refresh fails, the last good response is served until
+        upstream recovers.
         """
-        from datetime import timedelta
-
         import requests_cache
 
         current_seasons = {info["seasonUuids"][0] for info in self.league_information.values()}
@@ -48,7 +46,7 @@ class hockeyface(object):
             "cache/hockey",
             backend="sqlite",
             urls_expire_after=urls_expire_after,
-            stale_if_error=timedelta(days=7),
+            stale_if_error=True,
             filter_fn=is_valid_json,
         )
 
