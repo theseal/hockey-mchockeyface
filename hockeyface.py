@@ -103,7 +103,7 @@ class hockeyface(object):
 
             for season in self.league_information[league]["seasonUuids"]:
                 # Example URL
-                #  https://www.championshockeyleague.com/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
+                #  https://www.chl.hockey/api/s3?q=schedule-21ec9dad81abe2e0240460d0-384dfd08cf1b5e6e93cd19ba.json
 
                 r = self.session.get(f"{self.league_information[league]['baseurl']}schedule-{season}.json")
                 try:
@@ -310,7 +310,7 @@ class hockeyface(object):
                 ],
             },
             "CHL": {
-                "baseurl": "https://www.championshockeyleague.com/api/s3?q=",
+                "baseurl": "https://www.chl.hockey/api/s3?q=",
                 "seasonUuids": [
                     "21ec9dad81abe2e0240460d0-fc954f6d33272fdf4a8b95bb",  # 2020/2027
                     "21ec9dad81abe2e0240460d0-3c5f99fa605394cc65733fc9",  # 2025/2026
