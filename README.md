@@ -8,8 +8,8 @@ Hockey McHockeyFace can be found running [here](https://hockey-mchockeyface.rymd
 ## Running Hockey McHockeyFace
 
 ```
-$ python -m pip install -r requirements.txt
-$ FLASK_APP=hockey-mchockeyface flask run
+$ uv sync
+$ uv run flask --app hockey-mchockeyface run
 ```
 ## Contributors
 * [TheSeal](https://github.com/theseal)

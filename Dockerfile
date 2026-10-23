@@ -5,6 +5,6 @@ ADD . /app
 
 WORKDIR /app
 
-RUN uv sync --frozen
+RUN uv sync --locked
 
 CMD ["uv","run","flask","--app","hockey-mchockeyface","run","--host=0.0.0.0"]
